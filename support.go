@@ -3,7 +3,6 @@ package main
 import (
 	"net/http"
 	"path"
-	"time"
 )
 
 const (
@@ -14,24 +13,8 @@ const (
 	serviceWunderground = "Weather Underground"
 )
 
-// Alert is a weather alert (e.g., severe thunderstorm)
-type Alert struct {
-	Description string    `json:"description"`
-	Expires     time.Time `json:"expires"`
-	URI         string    `json:"uri"`
-}
-
-// Forecast represents future weather conditions
-type Forecast struct {
-	Date    time.Time
-	Summary string
-	Details string
-	Icon    string
-	HiTemp  Temperature
-	LowTemp Temperature
-	Sunrise *time.Time
-	Sunset  *time.Time
-	Precip  int
+func round(val float64) int64 {
+	return int64(val + 0.5)
 }
 
 // Location is a named location
@@ -49,42 +32,20 @@ type Service interface {
 	Forecast(Location, map[string]string) (Weather, error)
 }
 
-// Temperature is a temperature in a specific unit system
-type Temperature struct {
-	Value float64
-	Units units
-}
-
 // TimeFormats are the available time formats
 var TimeFormats = []string{
-	"%Y-%m-%d %H:%M",
-	"%A, %B %d, %Y %I:%M%p",
-	"%a, %d %b %Y %H:%M",
-	"%I:%M%p on %m/%d/%Y",
-	"%d.%m.%Y %H:%M",
-	"%d/%m/%Y %H:%M",
+	"15:04",
+	"3:04pm",
 }
 
-type units string
-
-// Weather is weather information
-type Weather struct {
-	Current struct {
-		Summary  string
-		Icon     string
-		Humidity float64
-		Temp     Temperature
-	}
-	Daily  []Forecast
-	Hourly []Forecast
-	Info   struct {
-		Time    time.Time
-		Sunrise time.Time
-		Sunset  time.Time
-		HiTemp  Temperature
-		LowTemp Temperature
-	}
-	Alerts []Alert
+// DateFormats are the available time formats
+var DateFormats = []string{
+	"2006-1-2",
+	"Mon, Jan 2, 2006",
+	"Mon, 2 Jan 2006",
+	"1/2/2006",
+	"2.1.2006",
+	"2/1/2006",
 }
 
 var client = &http.Client{}

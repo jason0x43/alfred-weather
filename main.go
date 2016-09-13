@@ -21,9 +21,10 @@ var config struct {
 	Icons                 string `desc:"Icon set"`
 	Days                  int
 	ShowLocaltime         bool
-	TimeFormat            string   `desc:"Timestamp format"`
+	DateFormat            string   `desc:"Date format"`
+	TimeFormat            string   `desc:"Time format"`
 	Location              Location `desc:"Default location"`
-	Units                 string   `desc:"Units"`
+	Units                 units    `desc:"Units"`
 }
 
 var cache struct {
@@ -57,8 +58,17 @@ func main() {
 		dlog.Println("loaded cache")
 	}
 
+	if config.TimeFormat == "" {
+		config.TimeFormat = TimeFormats[0]
+	}
+
+	if config.DateFormat == "" {
+		config.DateFormat = DateFormats[0]
+	}
+
 	commands := []alfred.Command{
-		ForecastCommand{},
+		DailyCommand{},
+		HourlyCommand{},
 		ConfigCommand{},
 	}
 

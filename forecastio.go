@@ -32,40 +32,44 @@ type fioConditions struct {
 	Time                int64   `json:"time"`
 }
 
-type fioForecast struct {
-	PrecipType        string  `json:"precipType"`
-	TemperatureMin    float64 `json:"temperatureMin"`
-	TemperatureMax    float64 `json:"temperatureMax"`
-	Summary           string  `json:"summary"`
-	SunsetTime        int64   `json:"sunsetTime"`
-	SunriseTime       int64   `json:"sunriseTime"`
-	PrecipProbability float64 `json:"precipProbability"`
-	Icon              string  `json:"icon"`
-	Time              int64   `json:"time"`
-}
-
-type fioAlert struct {
-	Title   string `json:"title"`
-	Expires int64  `json:"exipres"`
-	URI     string `json:"uri"`
-}
-
 type fioWeather struct {
 	Daily struct {
-		Icon    string        `json:"icon"`
-		Data    []fioForecast `json:"data"`
-		Summary string        `json:"summary"`
+		Icon string `json:"icon"`
+		Data []struct {
+			PrecipType        string  `json:"precipType"`
+			TempMin           float64 `json:"temperatureMin"`
+			TempMax           float64 `json:"temperatureMax"`
+			Summary           string  `json:"summary"`
+			SunsetTime        int64   `json:"sunsetTime"`
+			SunriseTime       int64   `json:"sunriseTime"`
+			PrecipProbability float64 `json:"precipProbability"`
+			Icon              string  `json:"icon"`
+			Time              int64   `json:"time"`
+		} `json:"data"`
+		Summary string `json:"summary"`
 	} `json:"daily"`
 	Hourly struct {
-		Icon    string        `json:"icon"`
-		Summary string        `json:"summary"`
-		Data    []fioForecast `json:"data"`
+		Icon    string `json:"icon"`
+		Summary string `json:"summary"`
+		Data    []struct {
+			ApparentTemp      float64 `json:"apparentTemperature"`
+			Humidity          float64 `json:"humidity"`
+			Icon              string  `json:"icon"`
+			PrecipProbability float64 `json:"precipProbability"`
+			Summary           string  `json:"summary"`
+			Temp              float64 `json:"temperature"`
+			Time              int64   `json:"time"`
+		} `json:"data"`
 	} `json:"hourly"`
 	Currently fioConditions `json:"currently"`
 	Flags     struct {
 		Units string `json:"units"`
 	} `json:"flags"`
-	Alerts []fioAlert
+	Alerts []struct {
+		Title   string `json:"title"`
+		Expires int64  `json:"exipres"`
+		URI     string `json:"uri"`
+	} `json:"alerts"`
 }
 
 // NewForecastIO returns a new ForecastIO handle
@@ -101,7 +105,7 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 	}
 
 	for _, a := range w.Alerts {
-		alert := Alert{
+		alert := alert{
 			Description: a.Title,
 			Expires:     time.Unix(a.Expires, 0),
 			URI:         a.URI,
@@ -109,9 +113,13 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 		weather.Alerts = append(weather.Alerts, alert)
 	}
 
-	units := units(w.Flags.Units)
+	var units units
+	if w.Flags.Units == "us" {
+		units = unitsUS
+	} else {
+		units = unitsMetric
+	}
 
-	weather.Info.Time = time.Unix(w.Currently.Time, 0)
 	weather.Current.Summary = w.Currently.Summary
 	weather.Current.Icon = fromFioIconName(w.Currently.Icon)
 	weather.Current.Humidity = w.Currently.Humidity * 100
@@ -121,40 +129,33 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 	}
 
 	for _, d := range w.Daily.Data {
-		sunrise := time.Unix(d.SunriseTime, 0)
-		sunset := time.Unix(d.SunsetTime, 0)
-
-		f := Forecast{
+		f := dailyForecast{
 			Date:    time.Unix(d.Time, 0),
 			Icon:    fromFioIconName(d.Icon),
 			Precip:  int(d.PrecipProbability * 100),
 			Summary: d.Summary,
-			HiTemp: Temperature{
-				Value: d.TemperatureMax,
+			HighTemp: Temperature{
+				Value: d.TempMax,
 				Units: units,
 			},
 			LowTemp: Temperature{
-				Value: d.TemperatureMin,
+				Value: d.TempMin,
 				Units: units,
 			},
-			Sunrise: &sunrise,
-			Sunset:  &sunset,
+			Sunrise: time.Unix(d.SunriseTime, 0),
+			Sunset:  time.Unix(d.SunsetTime, 0),
 		}
 		weather.Daily = append(weather.Daily, f)
 	}
 
 	for _, d := range w.Hourly.Data {
-		f := Forecast{
+		f := hourlyForecast{
 			Date:    time.Unix(d.Time, 0),
 			Icon:    fromFioIconName(d.Icon),
 			Precip:  int(d.PrecipProbability * 100),
 			Summary: d.Summary,
-			HiTemp: Temperature{
-				Value: d.TemperatureMax,
-				Units: units,
-			},
-			LowTemp: Temperature{
-				Value: d.TemperatureMin,
+			Temp: Temperature{
+				Value: d.Temp,
 				Units: units,
 			},
 		}

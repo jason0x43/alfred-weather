@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -42,24 +43,40 @@ type wundTime struct {
 	Minute json.Number `json:"minute"`
 }
 
-func (w *wundTime) ToHoursAndMinutes() (h, m int64) {
+func (w *wundTime) toHoursAndMinutes() (h, m int64) {
 	h, _ = w.Hour.Int64()
 	m, _ = w.Minute.Int64()
 	return
+}
+
+func (w *wundTime) toTime() (t time.Time) {
+	now := time.Now()
+	today := now.Format("1/2/2016")
+	h, m := w.toHoursAndMinutes()
+	loc := now.Location()
+	t, _ = time.ParseInLocation("1/2/2006 15:04", fmt.Sprintf("%s %d:%d", today, h, m), loc)
+	return
+}
+
+type wundEpoch struct {
+	Epoch json.Number `json:"epoch"`
+}
+
+func (w *wundEpoch) toTime() (t time.Time) {
+	epoch, _ := w.Epoch.Int64()
+	return time.Unix(epoch, 0)
 }
 
 type wundWeather struct {
 	Forecast struct {
 		SimpleForecast struct {
 			Daily []struct {
-				Date struct {
-					Epoch json.Number `json:"epoch"`
-				} `json:"date"`
-				Icon         string   `json:"icon"`
-				Summary      string   `json:"conditions"`
-				High         wundTemp `json:"high"`
-				Low          wundTemp `json:"low"`
-				PrecipChance int64    `json:"pop"`
+				Date         wundEpoch `json:"date"`
+				Icon         string    `json:"icon"`
+				Summary      string    `json:"conditions"`
+				High         wundTemp  `json:"high"`
+				Low          wundTemp  `json:"low"`
+				PrecipChance int64     `json:"pop"`
 			} `json:"forecastday"`
 		} `json:"simpleforecast"`
 		TextForecast struct {
@@ -69,6 +86,19 @@ type wundWeather struct {
 			} `json:"forecastday"`
 		} `json:"txt_forecast"`
 	} `json:"forecast"`
+	HourlyForecast []struct {
+		Time struct {
+			Epoch json.Number `json:"epoch"`
+		} `json:"FCTTIME"`
+		Summary      string      `json:"condition"`
+		Humidity     json.Number `json:"humidity"`
+		Icon         string      `json:"icon"`
+		PrecipChance json.Number `json:"pop"`
+		Temperature  struct {
+			English json.Number `json:"english"`
+			Metric  json.Number `json:"metric"`
+		} `json:"temp"`
+	} `json:"hourly_forecast"`
 	Currently struct {
 		TempC             float64     `json:"temp_c"`
 		TempF             float64     `json:"temp_f"`
@@ -78,13 +108,18 @@ type wundWeather struct {
 		FeelsLikeC        json.Number `json:"feelslike_c"`
 		FeelsLikeF        json.Number `json:"feelslike_f"`
 		PrecipProbability float64     `json:"precipProbability"`
-		Time              json.Number `json:"local_epoc"`
+		LocalEpoch        json.Number `json:"local_epoc"`
+		LocalTime         string      `json:"local_time_rfc822"`
 	} `json:"current_observation"`
-	Alerts   []wundAlert
-	SunPhase struct {
-		Sunrise wundTime `json:"sunrise"`
-		Sunset  wundTime `json:"sunset"`
-	} `json:"sun_phase"`
+	Alerts    []wundAlert
+	Astronomy []struct {
+		Sunrise struct {
+			Date wundEpoch `json:"date"`
+		} `json:"sunrise"`
+		Sunset struct {
+			Date wundEpoch `json:"date"`
+		} `json:"sunset"`
+	} `json:"astronomy10day"`
 }
 
 // NewWeatherUnderground returns a new WeatherUnderground handle
@@ -96,7 +131,7 @@ func NewWeatherUnderground(apiKey string) WeatherUnderground {
 func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 	dlog.Printf("getting forecast for %#v", l)
 
-	url := fmt.Sprintf("%s/%s/conditions/alerts/astronomy/forecast10day/q/%f,%f.json",
+	url := fmt.Sprintf("%s/%s/conditions/alerts/hourly/astronomy10day/forecast10day/q/%f,%f.json",
 		wundAPI, f.apiKey, l.Latitude, l.Longitude)
 	dlog.Printf("getting URL %s", url)
 
@@ -121,7 +156,7 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 	}
 
 	for _, a := range w.Alerts {
-		alert := Alert{
+		alert := alert{
 			Description: a.Title,
 			Expires:     time.Unix(a.Expires, 0),
 			URI:         a.URI,
@@ -129,68 +164,77 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		weather.Alerts = append(weather.Alerts, alert)
 	}
 
-	ts, _ := w.Currently.Time.Int64()
-
-	weather.Info.Time = time.Unix(ts, 0)
-	weather.Current.Summary = w.Currently.Summary
-	weather.Current.Icon = fromWundIconName(w.Currently.Icon)
-
 	if humidity, err := strconv.ParseFloat(w.Currently.Humidity[:len(w.Currently.Humidity)-1], 64); err != nil {
 		weather.Current.Humidity = humidity
 	}
 
-	units := config.Units
-
-	if units == string(unitsUS) {
-		weather.Current.Temp = Temperature{
-			Units: unitsUS,
-			Value: w.Currently.TempF,
-		}
-	} else {
-		weather.Current.Temp = Temperature{
-			Units: unitsMetric,
-			Value: w.Currently.TempC,
-		}
+	weather.Current.Temp = Temperature{
+		Units: unitsMetric,
+		Value: w.Currently.TempC,
 	}
 
 	for i, d := range w.Forecast.SimpleForecast.Daily {
 		epoch, _ := d.Date.Epoch.Int64()
+		highTemp, _ := d.High.Celsius.Float64()
+		lowTemp, _ := d.Low.Celsius.Float64()
 
-		f := Forecast{
+		f := dailyForecast{
 			Date:    time.Unix(epoch, 0),
 			Icon:    fromWundIconName(d.Icon),
-			Precip:  int(d.PrecipChance * 100),
+			Precip:  int(d.PrecipChance),
 			Summary: d.Summary,
-			// HiTemp: Temperature{
-			// 	Value: d.TemperatureMax,
-			// 	Units: units,
-			// },
-			// LowTemp: Temperature{
-			// 	Value: d.TemperatureMin,
-			// 	Units: units,
-			// },
-		}
-
-		if units == string(unitsUS) {
-			f.Details = w.Forecast.TextForecast.Daily[i].TextUS
-		} else {
-			f.Details = w.Forecast.TextForecast.Daily[i].TextMetric
-		}
-
-		now := time.Now()
-		today := now.Format("1/2/2006")
-		if f.Date.Format("1/2/2006") == today {
-			loc := now.Location()
-			h, m := w.SunPhase.Sunrise.ToHoursAndMinutes()
-			sunrise, _ := time.ParseInLocation("1/2/2006 15:04", fmt.Sprintf("%s %d:%d", today, h, m), loc)
-			f.Sunrise = &sunrise
-
-			h, m = w.SunPhase.Sunset.ToHoursAndMinutes()
-			sunset, _ := time.ParseInLocation("1/2/2006 15:04", fmt.Sprintf("%s %d:%d", today, h, m), loc)
-			f.Sunset = &sunset
+			HighTemp: Temperature{
+				Value: highTemp,
+				Units: unitsMetric,
+			},
+			LowTemp: Temperature{
+				Value: lowTemp,
+				Units: unitsMetric,
+			},
+			Sunrise: w.Astronomy[i].Sunrise.Date.toTime(),
+			Sunset:  w.Astronomy[i].Sunset.Date.toTime(),
 		}
 
 		weather.Daily = append(weather.Daily, f)
+	}
+
+	for _, d := range w.HourlyForecast {
+		epochValue, _ := d.Time.Epoch.Int64()
+		precipChance, _ := d.PrecipChance.Int64()
+		temp, _ := d.Temperature.Metric.Float64()
+		dtime := time.Unix(epochValue, 0)
+
+		nt := ""
+		if weather.IsAtNight(dtime) {
+			nt = "nt_"
+		}
+
+		f := hourlyForecast{
+			Date:   dtime,
+			Icon:   nt + fromFioIconName(d.Icon),
+			Precip: int(precipChance),
+			Temp: Temperature{
+				Value: temp,
+				Units: unitsMetric,
+			},
+			Summary: d.Summary,
+		}
+		weather.Hourly = append(weather.Hourly, f)
+	}
+
+	currentTime, _ := time.Parse("Mon, 2 Jan 2006 15:04:05 -0700", w.Currently.LocalTime)
+	isNight := weather.IsAtNight(currentTime)
+	nt := ""
+	if isNight {
+		nt = "nt_"
+	}
+
+	weather.Current.Time = currentTime
+	weather.Current.Summary = w.Currently.Summary
+	weather.Current.Icon = fromWundIconName(w.Currently.Icon)
+
+	if isNight && !strings.HasPrefix(weather.Current.Icon, nt) {
+		weather.Current.Icon = nt + weather.Current.Icon
 	}
 
 	return

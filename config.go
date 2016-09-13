@@ -56,6 +56,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.Service",
 				Title:        fmt.Sprintf("Service: %v", config.Service),
 				Autocomplete: "Service ",
 				Subtitle:     desc,
@@ -75,6 +76,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.Units",
 				Title:        fmt.Sprintf("Units: %v", config.Units),
 				Autocomplete: "Units ",
 				Subtitle:     desc,
@@ -112,6 +114,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.Location",
 				Title:        "Location: " + config.Location.Name,
 				Subtitle:     desc,
 				Autocomplete: "Location ",
@@ -132,9 +135,25 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.Icons",
 				Title:        "Icons: " + config.Icons,
 				Subtitle:     desc,
 				Autocomplete: "Icons ",
+			})
+
+		case "DateFormat":
+			if name == "DateFormat" {
+				for _, tf := range DateFormats {
+					items = append(items, makeStringChoice("DateFormat", tf))
+				}
+				return
+			}
+
+			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.DateFormat",
+				Title:        "DateFormat: " + config.DateFormat,
+				Subtitle:     desc,
+				Autocomplete: "DateFormat ",
 			})
 
 		case "TimeFormat":
@@ -146,6 +165,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			items = append(items, alfred.Item{
+				UID:          workflow.BundleID() + ".config.TimeFormat",
 				Title:        "TimeFormat: " + config.TimeFormat,
 				Subtitle:     desc,
 				Autocomplete: "TimeFormat ",
@@ -153,6 +173,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 
 		default:
 			item := alfred.Item{
+				UID:          workflow.BundleID() + ".config." + field.Name,
 				Title:        field.Name,
 				Subtitle:     desc,
 				Autocomplete: field.Name,
@@ -244,7 +265,7 @@ func (c ConfigCommand) Do(data string) (out string, err error) {
 func makeStringChoice(fieldName, value string) alfred.Item {
 	opts := config
 	o := reflect.Indirect(reflect.ValueOf(&opts))
-	currentValue := o.FieldByName(fieldName).Interface().(string)
+	currentValue := o.FieldByName(fieldName).String()
 	o.FieldByName(fieldName).SetString(value)
 	item := alfred.Item{
 		Title: value,

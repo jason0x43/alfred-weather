@@ -110,6 +110,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
 		<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
 		<array>
 			<dict>
@@ -147,6 +160,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Weather</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -172,7 +206,7 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Get the weather forecast</string>
+				<string>Weather!</string>
 				<key>title</key>
 				<string>wtr</string>
 				<key>type</key>
@@ -186,40 +220,6 @@
 			<string>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>triggerid</key>
-				<string>start</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>A6114784-23AB-4AC4-84C3-2D137BFBC514</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Weather</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -243,6 +243,19 @@
 			<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>start</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>A6114784-23AB-4AC4-84C3-2D137BFBC514</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -336,23 +349,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>^-trigger\s</string>
-				<key>replacestring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.replace</string>
-			<key>uid</key>
-			<string>D63DA191-0837-49A4-8F11-476BA59AE028</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -372,6 +368,23 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^-trigger\s</string>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>D63DA191-0837-49A4-8F11-476BA59AE028</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -379,7 +392,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>wtf</string>
+				<string>wtd</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -391,15 +404,15 @@
 				<key>runningsubtext</key>
 				<string>Thinking...</string>
 				<key>script</key>
-				<string>./alfred-weather "$1" "{\"keyword\":\"forecast\"}"</string>
+				<string>./alfred-weather "$1" "{\"keyword\":\"daily\"}"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Get a weather forecast</string>
+				<string>Get a forecast for the next few days</string>
 				<key>title</key>
-				<string>wtf</string>
+				<string>wtd</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -409,6 +422,49 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>6F3135C7-F745-4BA1-A587-2B3E6D63D985</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>wth</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Thinking...</string>
+				<key>script</key>
+				<string>./alfred-weather "$1" "{\"keyword\":\"hourly\"}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Get forecast for the next few hours</string>
+				<key>title</key>
+				<string>wth</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E33B90CE-05AB-4686-9BD3-3E89E7004930</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -486,6 +542,13 @@
 			<integer>800</integer>
 			<key>ypos</key>
 			<integer>200</integer>
+		</dict>
+		<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>410</integer>
 		</dict>
 		<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
 		<dict>
