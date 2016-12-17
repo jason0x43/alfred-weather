@@ -69,17 +69,33 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		}
 
 		item := alfred.Item{
-			Title:    date + ": " + conditions,
-			Subtitle: fmt.Sprintf("%d/%d°%s, %d%%", entry.HighTemp.Int64(), entry.LowTemp.Int64(), deg, entry.Precip),
-			Icon:     getIconFile(icon),
-			Arg: &alfred.ItemArg{
+			Title: date + ": " + conditions,
+			Subtitle: fmt.Sprintf("%d/%d°%s    ☂ %d%%    ☼ %s    ☾ %s",
+				entry.HighTemp.Int64(), entry.LowTemp.Int64(), deg,
+				entry.Precip, entry.Sunrise.Format(config.TimeFormat),
+				entry.Sunset.Format(config.TimeFormat)),
+			Icon: getIconFile(icon),
+		}
+
+		if hasHourly(weather, entry.Date) {
+			item.Arg = &alfred.ItemArg{
 				Keyword: "hourly",
 				Data:    alfred.Stringify(&hourlyConfig{Start: &entry.Sunrise}),
-			},
+			}
 		}
 
 		items = append(items, item)
 	}
 
 	return
+}
+
+func hasHourly(weather Weather, date time.Time) bool {
+	target := date.Format("2006-01-02")
+	for i := range weather.Hourly {
+		if weather.Hourly[i].Time.Format("2006-01-02") == target {
+			return true
+		}
+	}
+	return false
 }
