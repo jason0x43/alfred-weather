@@ -258,6 +258,14 @@
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
@@ -273,14 +281,6 @@
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.hidealfred</string>
-			<key>uid</key>
-			<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -478,84 +478,84 @@
 			<key>xpos</key>
 			<integer>710</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>190</integer>
 		</dict>
 		<key>3AEF708A-258B-4276-9E5A-78C190C5A309</key>
 		<dict>
 			<key>xpos</key>
 			<integer>890</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>160</integer>
 		</dict>
 		<key>477CCFC0-348D-4D12-AD03-EE46A6379F81</key>
 		<dict>
 			<key>xpos</key>
 			<integer>890</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>40</integer>
 		</dict>
 		<key>6F3135C7-F745-4BA1-A587-2B3E6D63D985</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>290</integer>
+			<integer>280</integer>
 		</dict>
 		<key>A6114784-23AB-4AC4-84C3-2D137BFBC514</key>
 		<dict>
 			<key>xpos</key>
 			<integer>40</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>40</integer>
 		</dict>
 		<key>B7B15DD1-C49C-4216-A1B5-D12C04692853</key>
 		<dict>
 			<key>xpos</key>
 			<integer>800</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>70</integer>
 		</dict>
 		<key>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</key>
 		<dict>
 			<key>xpos</key>
 			<integer>710</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>70</integer>
 		</dict>
 		<key>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>160</integer>
 		</dict>
 		<key>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>40</integer>
 		</dict>
 		<key>D63DA191-0837-49A4-8F11-476BA59AE028</key>
 		<dict>
 			<key>xpos</key>
 			<integer>800</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>190</integer>
 		</dict>
 		<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>410</integer>
+			<integer>400</integer>
 		</dict>
 		<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
 		<dict>
 			<key>xpos</key>
 			<integer>520</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>40</integer>
 		</dict>
 	</dict>
 	<key>version</key>
