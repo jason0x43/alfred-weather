@@ -2,7 +2,9 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"path"
+	"strings"
 )
 
 const (
@@ -51,5 +53,11 @@ var DateFormats = []string{
 var client = &http.Client{}
 
 func getIconFile(name string) string {
-	return path.Join("icons", config.Icons, name+".png")
+	icon := path.Join("icons", config.Icons, name+".png")
+	if _, err := os.Stat(icon); err != nil {
+		if strings.HasPrefix(name, "nt_") {
+			return path.Join("icons", config.Icons, name[3:]+".png")
+		}
+	}
+	return icon
 }
