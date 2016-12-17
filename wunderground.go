@@ -28,9 +28,12 @@ type wundConditions struct {
 }
 
 type wundAlert struct {
-	Title   string `json:"title"`
-	Expires int64  `json:"exipres"`
-	URI     string `json:"uri"`
+	Description string `json:"description"`
+	Expires     string `json:"expires_epoch"`
+	Zones       []struct {
+		Zone  string `json:"ZONE"`
+		State string `json:"state"`
+	} `json:"ZONES"`
 }
 
 type wundTemp struct {
@@ -110,8 +113,15 @@ type wundWeather struct {
 		PrecipProbability float64     `json:"precipProbability"`
 		LocalEpoch        json.Number `json:"local_epoc"`
 		LocalTime         string      `json:"local_time_rfc822"`
+		DisplayLocation   struct {
+			City  string `json:"city"`
+			State string `json:"state"`
+			Full  string `json:"full"`
+			ZIP   string `json:"zip"`
+		} `json:"display_location"`
 	} `json:"current_observation"`
-	Alerts    []wundAlert
+	Alerts    []wundAlert `json:"alerts"`
+	QueryZone string      `json:"query_zone"`
 	Astronomy []struct {
 		Sunrise struct {
 			Date wundEpoch `json:"date"`
@@ -156,10 +166,13 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 	}
 
 	for _, a := range w.Alerts {
+		expires, _ := strconv.ParseInt(a.Expires, 10, 64)
+		state := w.Currently.DisplayLocation.State
+
 		alert := alert{
-			Description: a.Title,
-			Expires:     time.Unix(a.Expires, 0),
-			URI:         a.URI,
+			Description: a.Description,
+			Expires:     time.Unix(expires, 0),
+			URI:         fmt.Sprintf("https://www.wunderground.com/US/%s/%s.html", state, w.QueryZone),
 		}
 		weather.Alerts = append(weather.Alerts, alert)
 	}

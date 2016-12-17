@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -38,6 +40,34 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	deg := "F"
 	if config.Units == unitsMetric {
 		deg = "C"
+	}
+
+	now := time.Now()
+
+	for _, alert := range weather.Alerts {
+		if alert.Expires.After(now) {
+			subtitle := fmt.Sprintf("Until %s", alert.Expires.Format(config.TimeFormat))
+			expireDate := alert.Expires.Format(config.DateFormat)
+			if expireDate != now.Format(config.DateFormat) {
+				subtitle += fmt.Sprintf(" on %s", expireDate)
+			}
+
+			item := alfred.Item{
+				Title:    fmt.Sprintf("Alert: %s", alert.Description),
+				Subtitle: subtitle,
+				Icon:     "alert.png",
+			}
+
+			if alert.URI != "" {
+				item.Arg = &alfred.ItemArg{
+					Keyword: "daily",
+					Mode:    alfred.ModeDo,
+					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URI}),
+				}
+			}
+
+			items = append(items, item)
+		}
 	}
 
 	items = append(items, alfred.Item{
@@ -90,6 +120,24 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	return
 }
 
+// Do runs the command
+func (c DailyCommand) Do(data string) (out string, err error) {
+	var cfg dailyCfg
+
+	if data != "" {
+		if err := json.Unmarshal([]byte(data), &cfg); err != nil {
+			dlog.Printf("Error unmarshaling tag data: %v", err)
+		}
+	}
+
+	if cfg.ToOpen != "" {
+		dlog.Printf("opening %s", cfg.ToOpen)
+		err = exec.Command("open", cfg.ToOpen).Run()
+	}
+
+	return
+}
+
 func hasHourly(weather Weather, date time.Time) bool {
 	target := date.Format("2006-01-02")
 	for i := range weather.Hourly {
@@ -98,4 +146,8 @@ func hasHourly(weather Weather, date time.Time) bool {
 		}
 	}
 	return false
+}
+
+type dailyCfg struct {
+	ToOpen string
 }
