@@ -58,11 +58,11 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 				Icon:     "alert.png",
 			}
 
-			if alert.URI != "" {
+			if alert.URL != "" {
 				item.Arg = &alfred.ItemArg{
 					Keyword: "daily",
 					Mode:    alfred.ModeDo,
-					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URI}),
+					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URL}),
 				}
 			}
 

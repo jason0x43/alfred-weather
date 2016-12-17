@@ -167,12 +167,11 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 
 	for _, a := range w.Alerts {
 		expires, _ := strconv.ParseInt(a.Expires, 10, 64)
-		state := w.Currently.DisplayLocation.State
 
 		alert := alert{
 			Description: a.Description,
 			Expires:     time.Unix(expires, 0),
-			URI:         fmt.Sprintf("https://www.wunderground.com/US/%s/%s.html", state, w.QueryZone),
+			URL:         getWundAlertURL(&w, &a),
 		}
 		weather.Alerts = append(weather.Alerts, alert)
 	}
@@ -258,4 +257,12 @@ func fromWundIconName(name string) string {
 		return n
 	}
 	return name
+}
+
+func getWundAlertURL(w *wundWeather, alert *wundAlert) (url string) {
+	state := w.Currently.DisplayLocation.State
+	if state != "" {
+		url = fmt.Sprintf("https://www.wunderground.com/US/%s/%s.html", state, w.QueryZone)
+	}
+	return
 }

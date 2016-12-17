@@ -108,7 +108,7 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 		alert := alert{
 			Description: a.Title,
 			Expires:     time.Unix(a.Expires, 0),
-			URI:         a.URI,
+			URL:         a.URI,
 		}
 		weather.Alerts = append(weather.Alerts, alert)
 	}

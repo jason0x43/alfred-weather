@@ -10,7 +10,7 @@ import (
 type alert struct {
 	Description string    `json:"description"`
 	Expires     time.Time `json:"expires"`
-	URI         string    `json:"uri"`
+	URL         string    `json:"url"`
 }
 
 // DailyForecast represents future weather conditions
