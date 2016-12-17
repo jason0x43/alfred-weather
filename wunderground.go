@@ -211,7 +211,7 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 
 		f := hourlyForecast{
 			Date:   dtime,
-			Icon:   nt + fromFioIconName(d.Icon),
+			Icon:   nt + fromDSIconName(d.Icon),
 			Precip: int(precipChance),
 			Temp: Temperature{
 				Value: temp,

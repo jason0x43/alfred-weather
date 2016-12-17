@@ -9,7 +9,7 @@ const (
 	unitsUS     units = "US"
 	unitsMetric units = "Metric"
 
-	serviceForecastIO   = "Forecast IO"
+	serviceDarkSky      = "Dark Sky"
 	serviceWunderground = "Weather Underground"
 )
 

@@ -12,20 +12,20 @@ import (
 	"github.com/jason0x43/go-alfred"
 )
 
-// ConfigCommand shows and sets configuration options
-type ConfigCommand struct{}
+// OptionsCommand shows and sets configuration options
+type OptionsCommand struct{}
 
 // About returns information about a command
-func (c ConfigCommand) About() alfred.CommandDef {
+func (c OptionsCommand) About() alfred.CommandDef {
 	return alfred.CommandDef{
-		Keyword:     "config",
-		Description: "Configure this workflow",
+		Keyword:     "options",
+		Description: "Workflow options",
 		IsEnabled:   true,
 	}
 }
 
 // Items ...
-func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) {
+func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	ct := reflect.TypeOf(config)
 	cfg := reflect.Indirect(reflect.ValueOf(config))
 
@@ -44,8 +44,8 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 		switch field.Name {
 		case "Service":
 			if name == "Service" {
-				if alfred.FuzzyMatches(string(serviceForecastIO), value) {
-					items = append(items, makeStringChoice("Service", string(serviceForecastIO)))
+				if alfred.FuzzyMatches(string(serviceDarkSky), value) {
+					items = append(items, makeStringChoice("Service", string(serviceDarkSky)))
 				}
 
 				if alfred.FuzzyMatches(string(serviceWunderground), value) {
@@ -103,7 +103,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 						Title:    location.Name,
 						Subtitle: fmt.Sprintf("(%f, %f)", location.Latitude, location.Longitude),
 						Arg: &alfred.ItemArg{
-							Keyword: "config",
+							Keyword: "options",
 							Mode:    alfred.ModeDo,
 							Data:    alfred.Stringify(&opts),
 						},
@@ -180,7 +180,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 			}
 
 			itemArg := &alfred.ItemArg{
-				Keyword: "config",
+				Keyword: "options",
 				Mode:    alfred.ModeDo,
 			}
 
@@ -249,7 +249,7 @@ func (c ConfigCommand) Items(arg, data string) (items []alfred.Item, err error) 
 }
 
 // Do ...
-func (c ConfigCommand) Do(data string) (out string, err error) {
+func (c OptionsCommand) Do(data string) (out string, err error) {
 	if err = json.Unmarshal([]byte(data), &config); err != nil {
 		return
 	}
@@ -270,7 +270,7 @@ func makeStringChoice(fieldName, value string) alfred.Item {
 	item := alfred.Item{
 		Title: value,
 		Arg: &alfred.ItemArg{
-			Keyword: "config",
+			Keyword: "options",
 			Mode:    alfred.ModeDo,
 			Data:    alfred.Stringify(&opts),
 		},

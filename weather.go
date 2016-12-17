@@ -101,8 +101,8 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 
 	if loc.Name != config.Location.Name || expired {
 		switch config.Service {
-		case serviceForecastIO:
-			service := NewForecastIO(config.ForecastIOKey)
+		case serviceDarkSky:
+			service := NewDarkSky(config.DarkSkyKey)
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}

@@ -16,7 +16,7 @@ var workflow alfred.Workflow
 
 var config struct {
 	Service               string `desc:"Service to use"`
-	ForecastIOKey         string `desc:"Your API key for forecast.io"`
+	DarkSkyKey            string `desc:"Your API key for Dark Sky"`
 	WeatherUndergroundKey string `desc:"Your API key for Weather Underground"`
 	Icons                 string `desc:"Icon set"`
 	Days                  int
@@ -69,7 +69,7 @@ func main() {
 	commands := []alfred.Command{
 		DailyCommand{},
 		HourlyCommand{},
-		ConfigCommand{},
+		OptionsCommand{},
 	}
 
 	workflow.Run(commands)

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var fioIconNames = map[string]string{
+var dsIconNames = map[string]string{
 	"clear-day":           "clear",
 	"clear-night":         "nt_clear",
 	"partly-cloudy-day":   "partlycloudy",
@@ -15,14 +15,14 @@ var fioIconNames = map[string]string{
 	"wind":                "hazy",
 }
 
-const fioAPI = "https://api.forecast.io/forecast"
+const dsAPI = "https://api.darksky.net/forecast"
 
-// ForecastIO is a Forecast.io service handle
-type ForecastIO struct {
+// DarkSky is a Forecast.io service handle
+type DarkSky struct {
 	apiKey string
 }
 
-type fioConditions struct {
+type dsConditions struct {
 	Temperature         float64 `json:"temperature"`
 	Icon                string  `json:"icon"`
 	Humidity            float64 `json:"humidity"`
@@ -32,7 +32,7 @@ type fioConditions struct {
 	Time                int64   `json:"time"`
 }
 
-type fioWeather struct {
+type dsWeather struct {
 	Daily struct {
 		Icon string `json:"icon"`
 		Data []struct {
@@ -61,7 +61,7 @@ type fioWeather struct {
 			Time              int64   `json:"time"`
 		} `json:"data"`
 	} `json:"hourly"`
-	Currently fioConditions `json:"currently"`
+	Currently dsConditions `json:"currently"`
 	Flags     struct {
 		Units string `json:"units"`
 	} `json:"flags"`
@@ -72,16 +72,16 @@ type fioWeather struct {
 	} `json:"alerts"`
 }
 
-// NewForecastIO returns a new ForecastIO handle
-func NewForecastIO(apiKey string) ForecastIO {
-	return ForecastIO{apiKey: apiKey}
+// NewDarkSky returns a new DarkSky handle
+func NewDarkSky(apiKey string) DarkSky {
+	return DarkSky{apiKey: apiKey}
 }
 
 // Forecast returns the forecast for a given location
-func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
+func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 	dlog.Printf("getting forecast for %#v", l)
 
-	url := fmt.Sprintf("%s/%s/%f,%f", fioAPI, f.apiKey, l.Latitude, l.Longitude)
+	url := fmt.Sprintf("%s/%s/%f,%f", dsAPI, f.apiKey, l.Latitude, l.Longitude)
 	dlog.Printf("getting URL %s", url)
 
 	var request *http.Request
@@ -99,7 +99,7 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 		return weather, fmt.Errorf(resp.Status)
 	}
 
-	var w fioWeather
+	var w dsWeather
 	if err = json.NewDecoder(resp.Body).Decode(&w); err != nil {
 		return
 	}
@@ -121,7 +121,7 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 	}
 
 	weather.Current.Summary = w.Currently.Summary
-	weather.Current.Icon = fromFioIconName(w.Currently.Icon)
+	weather.Current.Icon = fromDSIconName(w.Currently.Icon)
 	weather.Current.Humidity = w.Currently.Humidity * 100
 	weather.Current.Temp = Temperature{
 		Value: w.Currently.Temperature,
@@ -131,7 +131,7 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 	for _, d := range w.Daily.Data {
 		f := dailyForecast{
 			Date:    time.Unix(d.Time, 0),
-			Icon:    fromFioIconName(d.Icon),
+			Icon:    fromDSIconName(d.Icon),
 			Precip:  int(d.PrecipProbability * 100),
 			Summary: d.Summary,
 			HighTemp: Temperature{
@@ -150,8 +150,8 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 
 	for _, d := range w.Hourly.Data {
 		f := hourlyForecast{
-			Date:    time.Unix(d.Time, 0),
-			Icon:    fromFioIconName(d.Icon),
+			Time:    time.Unix(d.Time, 0),
+			Icon:    fromDSIconName(d.Icon),
 			Precip:  int(d.PrecipProbability * 100),
 			Summary: d.Summary,
 			Temp: Temperature{
@@ -165,8 +165,8 @@ func (f *ForecastIO) Forecast(l Location) (weather Weather, err error) {
 	return
 }
 
-func fromFioIconName(name string) string {
-	if n, ok := fioIconNames[name]; ok {
+func fromDSIconName(name string) string {
+	if n, ok := dsIconNames[name]; ok {
 		return n
 	}
 	return name
