@@ -27,7 +27,7 @@ type dailyForecast struct {
 
 // HourlyForecast represents future weather conditions
 type hourlyForecast struct {
-	Date    time.Time
+	Time    time.Time
 	Summary string
 	Icon    string
 	Temp    Temperature

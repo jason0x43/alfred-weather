@@ -41,7 +41,7 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 	if cfg.Start != nil {
 		startTime = *cfg.Start
 	} else if len(weather.Hourly) > 0 {
-		startTime = weather.Hourly[0].Date
+		startTime = weather.Hourly[0].Time
 	}
 
 	items = append(items, alfred.Item{
@@ -58,7 +58,7 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 	}
 
 	for _, entry := range weather.Hourly {
-		if entry.Date.Before(startTime) {
+		if entry.Time.Before(startTime) {
 			continue
 		}
 
@@ -66,8 +66,8 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 		icon := entry.Icon
 
 		item := alfred.Item{
-			Title:    entry.Date.Format("Mon "+config.TimeFormat) + ": " + conditions,
 			Subtitle: fmt.Sprintf("%d°%s, %d%%", entry.Temp.Int64(), deg, entry.Precip),
+			Title:    entry.Time.Format("Mon "+config.TimeFormat) + ": " + conditions,
 			Icon:     getIconFile(icon),
 		}
 
