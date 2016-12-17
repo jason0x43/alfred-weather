@@ -13,17 +13,10 @@ type HourlyCommand struct{}
 
 // About returns information about a command
 func (c HourlyCommand) About() alfred.CommandDef {
-	var isEnabled bool
-	if config.Service == serviceForecastIO && config.ForecastIOKey != "" {
-		isEnabled = true
-	} else if config.Service == serviceWunderground && config.WeatherUndergroundKey != "" {
-		isEnabled = true
-	}
-
 	return alfred.CommandDef{
 		Keyword:     "hourly",
 		Description: "Get a forecast for the next few hours",
-		IsEnabled:   isEnabled,
+		IsEnabled:   config.Service != "" && config.ServiceKey != "",
 	}
 }
 
