@@ -66,8 +66,8 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 		icon := entry.Icon
 
 		item := alfred.Item{
-			Subtitle: fmt.Sprintf("%d°%s, %d%%", entry.Temp.Int64(), deg, entry.Precip),
 			Title:    entry.Time.Format("Mon "+config.TimeFormat) + ": " + conditions,
+			Subtitle: fmt.Sprintf("%d°%s    ☂ %d%%", entry.Temp.Int64(), deg, entry.Precip),
 			Icon:     getIconFile(icon),
 		}
 
