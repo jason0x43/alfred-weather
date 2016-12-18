@@ -57,6 +57,8 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 		deg = "C"
 	}
 
+	items = append(items, getAlertItems(&weather)...)
+
 	for _, entry := range weather.Hourly {
 		if entry.Time.Before(startTime) {
 			continue

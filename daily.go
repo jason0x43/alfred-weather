@@ -42,33 +42,7 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		deg = "C"
 	}
 
-	now := time.Now()
-
-	for _, alert := range weather.Alerts {
-		if alert.Expires.After(now) {
-			subtitle := fmt.Sprintf("Until %s", alert.Expires.Format(config.TimeFormat))
-			expireDate := alert.Expires.Format(config.DateFormat)
-			if expireDate != now.Format(config.DateFormat) {
-				subtitle += fmt.Sprintf(" on %s", expireDate)
-			}
-
-			item := alfred.Item{
-				Title:    fmt.Sprintf("Alert: %s", alert.Description),
-				Subtitle: subtitle,
-				Icon:     "alert.png",
-			}
-
-			if alert.URL != "" {
-				item.Arg = &alfred.ItemArg{
-					Keyword: "daily",
-					Mode:    alfred.ModeDo,
-					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URL}),
-				}
-			}
-
-			items = append(items, item)
-		}
-	}
+	items = append(items, getAlertItems(&weather)...)
 
 	items = append(items, alfred.Item{
 		Title:    "Currently: " + weather.Current.Summary,
@@ -133,6 +107,38 @@ func (c DailyCommand) Do(data string) (out string, err error) {
 	if cfg.ToOpen != "" {
 		dlog.Printf("opening %s", cfg.ToOpen)
 		err = exec.Command("open", cfg.ToOpen).Run()
+	}
+
+	return
+}
+
+func getAlertItems(weather *Weather) (items []alfred.Item) {
+	now := time.Now()
+
+	for _, alert := range weather.Alerts {
+		if alert.Expires.After(now) {
+			subtitle := fmt.Sprintf("Until %s", alert.Expires.Format(config.TimeFormat))
+			expireDate := alert.Expires.Format(config.DateFormat)
+			if expireDate != now.Format(config.DateFormat) {
+				subtitle += fmt.Sprintf(" on %s", expireDate)
+			}
+
+			item := alfred.Item{
+				Title:    fmt.Sprintf("Alert: %s", alert.Description),
+				Subtitle: subtitle,
+				Icon:     "alert.png",
+			}
+
+			if alert.URL != "" {
+				item.Arg = &alfred.ItemArg{
+					Keyword: "daily",
+					Mode:    alfred.ModeDo,
+					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URL}),
+				}
+			}
+
+			items = append(items, item)
+		}
 	}
 
 	return
