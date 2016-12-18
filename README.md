@@ -3,7 +3,7 @@ alfred-weather
 
 An [Alfred][alfred] workflow for showing weather forecasts
 
-This workflow lets you access weather forecasts from [forecast.io][fio] and the
+This workflow lets you access weather forecasts from [Dark Sky][darksky] and the
 [Weather Underground][wund]. 
 
 Credits
@@ -17,4 +17,4 @@ provides a source URL for the icon set.
 [alfred]: http://www.alfredapp.com
 [icons]: http://www.weathericonsets.com
 [wund]: http://www.weatherunderground.com
-[fio]: http://forecast.io
+[darksky]: http://darksky.net
