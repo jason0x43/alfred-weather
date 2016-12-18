@@ -64,6 +64,14 @@ func main() {
 		config.DateFormat = DateFormats[0]
 	}
 
+	if config.Icons == "" {
+		config.Icons = "grzanka"
+	}
+
+	if config.Units == "" {
+		config.Units = unitsUS
+	}
+
 	commands := []alfred.Command{
 		DailyCommand{},
 		HourlyCommand{},
