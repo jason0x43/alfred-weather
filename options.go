@@ -8,6 +8,7 @@ import (
 	"os"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/jason0x43/go-alfred"
 )
@@ -257,6 +258,12 @@ func (c OptionsCommand) Do(data string) (out string, err error) {
 	if err = alfred.SaveJSON(configFile, &config); err != nil {
 		log.Printf("Error saving config: %s\n", err)
 		return "Error updating config", err
+	}
+
+	// Clear the cache to allow data to be requestsed with the new options
+	cache.Time = time.Unix(0, 0)
+	if err = alfred.SaveJSON(cacheFile, &cache); err != nil {
+		log.Printf("Error saving cache: %s\n", err)
 	}
 
 	return "Updated config", err
