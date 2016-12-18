@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os/exec"
 	"strings"
 	"time"
 
@@ -94,24 +92,6 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	return
 }
 
-// Do runs the command
-func (c DailyCommand) Do(data string) (out string, err error) {
-	var cfg dailyCfg
-
-	if data != "" {
-		if err := json.Unmarshal([]byte(data), &cfg); err != nil {
-			dlog.Printf("Error unmarshaling tag data: %v", err)
-		}
-	}
-
-	if cfg.ToOpen != "" {
-		dlog.Printf("opening %s", cfg.ToOpen)
-		err = exec.Command("open", cfg.ToOpen).Run()
-	}
-
-	return
-}
-
 func getAlertItems(weather *Weather) (items []alfred.Item) {
 	now := time.Now()
 
@@ -133,7 +113,7 @@ func getAlertItems(weather *Weather) (items []alfred.Item) {
 				item.Arg = &alfred.ItemArg{
 					Keyword: "daily",
 					Mode:    alfred.ModeDo,
-					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URL}),
+					Data:    alfred.Stringify(optionsCfg{ToOpen: alert.URL}),
 				}
 			}
 
@@ -152,8 +132,4 @@ func hasHourly(weather Weather, date time.Time) bool {
 		}
 	}
 	return false
-}
-
-type dailyCfg struct {
-	ToOpen string
 }

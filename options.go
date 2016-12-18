@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"reflect"
 	"strconv"
 	"time"
@@ -106,7 +107,7 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 						Arg: &alfred.ItemArg{
 							Keyword: "options",
 							Mode:    alfred.ModeDo,
-							Data:    alfred.Stringify(&opts),
+							Data:    alfred.Stringify(optionsCfg{Config: &opts}),
 						},
 					})
 				}
@@ -246,27 +247,52 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 
 	alfred.FuzzySort(items, arg)
 
+	if latest, available := workflow.UpdateAvailable(); available {
+		items = append(items, alfred.Item{
+			Title:    fmt.Sprintf("Update available: %v", latest.Version),
+			Subtitle: fmt.Sprintf("You have %s", workflow.Version()),
+			Arg: &alfred.ItemArg{
+				Keyword: "options",
+				Mode:    alfred.ModeDo,
+				Data:    alfred.Stringify(optionsCfg{ToOpen: latest.URL}),
+			},
+		})
+	}
+
 	return
 }
 
 // Do ...
 func (c OptionsCommand) Do(data string) (out string, err error) {
-	if err = json.Unmarshal([]byte(data), &config); err != nil {
-		return
+	var cfg optionsCfg
+
+	if data != "" {
+		if err := json.Unmarshal([]byte(data), &cfg); err != nil {
+			dlog.Printf("Error unmarshaling tag data: %v", err)
+		}
 	}
 
-	if err = alfred.SaveJSON(configFile, &config); err != nil {
-		log.Printf("Error saving config: %s\n", err)
-		return "Error updating config", err
+	if cfg.ToOpen != "" {
+		dlog.Printf("opening %s", cfg.ToOpen)
+		err = exec.Command("open", cfg.ToOpen).Run()
 	}
 
-	// Clear the cache to allow data to be requestsed with the new options
-	cache.Time = time.Unix(0, 0)
-	if err = alfred.SaveJSON(cacheFile, &cache); err != nil {
-		log.Printf("Error saving cache: %s\n", err)
+	if cfg.Config != nil {
+		if err = alfred.SaveJSON(configFile, cfg.Config); err != nil {
+			log.Printf("Error saving config: %s\n", err)
+			return "Error updating config", err
+		}
+
+		// Clear the cache to allow data to be requestsed with the new options
+		cache.Time = time.Unix(0, 0)
+		if err = alfred.SaveJSON(cacheFile, &cache); err != nil {
+			log.Printf("Error saving cache: %s\n", err)
+		}
+
+		out = "Updated config"
 	}
 
-	return "Updated config", err
+	return
 }
 
 func makeStringChoice(fieldName, value string) alfred.Item {
@@ -279,9 +305,14 @@ func makeStringChoice(fieldName, value string) alfred.Item {
 		Arg: &alfred.ItemArg{
 			Keyword: "options",
 			Mode:    alfred.ModeDo,
-			Data:    alfred.Stringify(&opts),
+			Data:    alfred.Stringify(optionsCfg{Config: &opts}),
 		},
 	}
 	item.AddCheckBox(currentValue == value)
 	return item
+}
+
+type optionsCfg struct {
+	ToOpen string
+	Config *configStruct
 }

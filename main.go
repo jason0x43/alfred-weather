@@ -14,7 +14,7 @@ var cacheFile string
 var configFile string
 var workflow alfred.Workflow
 
-var config struct {
+type configStruct struct {
 	Service               string   `desc:"Service to use"`
 	DarkSkyKey            string   `desc:"Your API key for Dark Sky"`
 	WeatherUndergroundKey string   `desc:"Your API key for Weather Underground"`
@@ -24,6 +24,8 @@ var config struct {
 	Location              Location `desc:"Default location"`
 	Units                 units    `desc:"Units"`
 }
+
+var config configStruct
 
 var cache struct {
 	Weather Weather
