@@ -15,13 +15,10 @@ var configFile string
 var workflow alfred.Workflow
 
 var config struct {
-	Service               string `desc:"Service to use"`
-	ServiceKey            string
-	DarkSkyKey            string `desc:"Your API key for Dark Sky"`
-	WeatherUndergroundKey string `desc:"Your API key for Weather Underground"`
-	Icons                 string `desc:"Icon set"`
-	Days                  int
-	ShowLocaltime         bool
+	Service               string   `desc:"Service to use"`
+	DarkSkyKey            string   `desc:"Your API key for Dark Sky"`
+	WeatherUndergroundKey string   `desc:"Your API key for Weather Underground"`
+	Icons                 string   `desc:"Icon set"`
 	DateFormat            string   `desc:"Date format"`
 	TimeFormat            string   `desc:"Time format"`
 	Location              Location `desc:"Default location"`
