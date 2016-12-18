@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -23,28 +24,28 @@ type DarkSky struct {
 }
 
 type dsConditions struct {
-	Temperature         float64 `json:"temperature"`
-	Icon                string  `json:"icon"`
-	Humidity            float64 `json:"humidity"`
-	Summary             string  `json:"summary"`
-	ApparentTemperature float64 `json:"apparentTemperature"`
-	PrecipProbability   float64 `json:"precipProbability"`
-	Time                int64   `json:"time"`
+	Temperature         temperature `json:"temperature"`
+	Icon                string      `json:"icon"`
+	Humidity            float64     `json:"humidity"`
+	Summary             string      `json:"summary"`
+	ApparentTemperature temperature `json:"apparentTemperature"`
+	PrecipProbability   float64     `json:"precipProbability"`
+	Time                int64       `json:"time"`
 }
 
 type dsWeather struct {
 	Daily struct {
 		Icon string `json:"icon"`
 		Data []struct {
-			PrecipType        string  `json:"precipType"`
-			TempMin           float64 `json:"temperatureMin"`
-			TempMax           float64 `json:"temperatureMax"`
-			Summary           string  `json:"summary"`
-			SunsetTime        int64   `json:"sunsetTime"`
-			SunriseTime       int64   `json:"sunriseTime"`
-			PrecipProbability float64 `json:"precipProbability"`
-			Icon              string  `json:"icon"`
-			Time              int64   `json:"time"`
+			PrecipType        string      `json:"precipType"`
+			TempMin           temperature `json:"temperatureMin"`
+			TempMax           temperature `json:"temperatureMax"`
+			Summary           string      `json:"summary"`
+			SunsetTime        int64       `json:"sunsetTime"`
+			SunriseTime       int64       `json:"sunriseTime"`
+			PrecipProbability float64     `json:"precipProbability"`
+			Icon              string      `json:"icon"`
+			Time              int64       `json:"time"`
 		} `json:"data"`
 		Summary string `json:"summary"`
 	} `json:"daily"`
@@ -52,13 +53,13 @@ type dsWeather struct {
 		Icon    string `json:"icon"`
 		Summary string `json:"summary"`
 		Data    []struct {
-			ApparentTemp      float64 `json:"apparentTemperature"`
-			Humidity          float64 `json:"humidity"`
-			Icon              string  `json:"icon"`
-			PrecipProbability float64 `json:"precipProbability"`
-			Summary           string  `json:"summary"`
-			Temp              float64 `json:"temperature"`
-			Time              int64   `json:"time"`
+			ApparentTemp      temperature `json:"apparentTemperature"`
+			Humidity          float64     `json:"humidity"`
+			Icon              string      `json:"icon"`
+			PrecipProbability float64     `json:"precipProbability"`
+			Summary           string      `json:"summary"`
+			Temp              temperature `json:"temperature"`
+			Time              int64       `json:"time"`
 		} `json:"data"`
 	} `json:"hourly"`
 	Currently dsConditions `json:"currently"`
@@ -81,7 +82,12 @@ func NewDarkSky(apiKey string) DarkSky {
 func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 	dlog.Printf("getting forecast for %#v", l)
 
-	url := fmt.Sprintf("%s/%s/%f,%f", dsAPI, f.apiKey, l.Latitude, l.Longitude)
+	query := url.Values{}
+	query.Set("exclude", "minutely")
+	query.Set("units", "si")
+
+	url := fmt.Sprintf("%s/%s/%f,%f?%s", dsAPI, f.apiKey, l.Latitude, l.Longitude, query.Encode())
+
 	dlog.Printf("getting URL %s", url)
 
 	var request *http.Request
@@ -113,37 +119,21 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 		weather.Alerts = append(weather.Alerts, alert)
 	}
 
-	var units units
-	if w.Flags.Units == "us" {
-		units = unitsUS
-	} else {
-		units = unitsMetric
-	}
-
 	weather.Current.Summary = w.Currently.Summary
 	weather.Current.Icon = fromDSIconName(w.Currently.Icon)
 	weather.Current.Humidity = w.Currently.Humidity * 100
-	weather.Current.Temp = Temperature{
-		Value: w.Currently.Temperature,
-		Units: units,
-	}
+	weather.Current.Temp = w.Currently.Temperature
 
 	for _, d := range w.Daily.Data {
 		f := dailyForecast{
-			Date:    time.Unix(d.Time, 0),
-			Icon:    fromDSIconName(d.Icon),
-			Precip:  int(d.PrecipProbability * 100),
-			Summary: d.Summary,
-			HighTemp: Temperature{
-				Value: d.TempMax,
-				Units: units,
-			},
-			LowTemp: Temperature{
-				Value: d.TempMin,
-				Units: units,
-			},
-			Sunrise: time.Unix(d.SunriseTime, 0),
-			Sunset:  time.Unix(d.SunsetTime, 0),
+			Date:     time.Unix(d.Time, 0),
+			Icon:     fromDSIconName(d.Icon),
+			Precip:   int(d.PrecipProbability * 100),
+			Summary:  d.Summary,
+			HighTemp: d.TempMax,
+			LowTemp:  d.TempMin,
+			Sunrise:  time.Unix(d.SunriseTime, 0),
+			Sunset:   time.Unix(d.SunsetTime, 0),
 		}
 		weather.Daily = append(weather.Daily, f)
 	}
@@ -154,10 +144,7 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 			Icon:    fromDSIconName(d.Icon),
 			Precip:  int(d.PrecipProbability * 100),
 			Summary: d.Summary,
-			Temp: Temperature{
-				Value: d.Temp,
-				Units: units,
-			},
+			Temp:    d.Temp,
 		}
 		weather.Hourly = append(weather.Hourly, f)
 	}

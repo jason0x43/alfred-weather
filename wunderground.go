@@ -103,7 +103,7 @@ type wundWeather struct {
 		} `json:"temp"`
 	} `json:"hourly_forecast"`
 	Currently struct {
-		TempC             float64     `json:"temp_c"`
+		TempC             temperature `json:"temp_c"`
 		TempF             float64     `json:"temp_f"`
 		Icon              string      `json:"icon"`
 		Humidity          string      `json:"relative_humidity"`
@@ -180,10 +180,7 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		weather.Current.Humidity = humidity
 	}
 
-	weather.Current.Temp = Temperature{
-		Units: unitsMetric,
-		Value: w.Currently.TempC,
-	}
+	weather.Current.Temp = w.Currently.TempC
 
 	for i, d := range w.Forecast.SimpleForecast.Daily {
 		epoch, _ := d.Date.Epoch.Int64()
@@ -191,20 +188,14 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		lowTemp, _ := d.Low.Celsius.Float64()
 
 		f := dailyForecast{
-			Date:    time.Unix(epoch, 0),
-			Icon:    fromWundIconName(d.Icon),
-			Precip:  int(d.PrecipChance),
-			Summary: d.Summary,
-			HighTemp: Temperature{
-				Value: highTemp,
-				Units: unitsMetric,
-			},
-			LowTemp: Temperature{
-				Value: lowTemp,
-				Units: unitsMetric,
-			},
-			Sunrise: w.Astronomy[i].Sunrise.Date.toTime(),
-			Sunset:  w.Astronomy[i].Sunset.Date.toTime(),
+			Date:     time.Unix(epoch, 0),
+			Icon:     fromWundIconName(d.Icon),
+			Precip:   int(d.PrecipChance),
+			Summary:  d.Summary,
+			HighTemp: temperature(highTemp),
+			LowTemp:  temperature(lowTemp),
+			Sunrise:  w.Astronomy[i].Sunrise.Date.toTime(),
+			Sunset:   w.Astronomy[i].Sunset.Date.toTime(),
 		}
 
 		weather.Daily = append(weather.Daily, f)
@@ -222,13 +213,10 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		}
 
 		f := hourlyForecast{
-			Time:   dtime,
-			Icon:   nt + fromDSIconName(d.Icon),
-			Precip: int(precipChance),
-			Temp: Temperature{
-				Value: temp,
-				Units: unitsMetric,
-			},
+			Time:    dtime,
+			Icon:    nt + fromDSIconName(d.Icon),
+			Precip:  int(precipChance),
+			Temp:    temperature(temp),
 			Summary: d.Summary,
 		}
 		weather.Hourly = append(weather.Hourly, f)

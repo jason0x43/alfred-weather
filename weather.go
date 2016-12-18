@@ -18,8 +18,8 @@ type dailyForecast struct {
 	Date     time.Time
 	Summary  string
 	Icon     string
-	HighTemp Temperature
-	LowTemp  Temperature
+	HighTemp temperature
+	LowTemp  temperature
 	Sunrise  time.Time
 	Sunset   time.Time
 	Precip   int
@@ -30,27 +30,22 @@ type hourlyForecast struct {
 	Time    time.Time
 	Summary string
 	Icon    string
-	Temp    Temperature
+	Temp    temperature
 	Precip  int
 }
 
 // Int64 returns the value of the temperature in the currently configured units as an int64
-func (t *Temperature) Int64() int64 {
-	if t.Units == config.Units {
-		return round(t.Value)
+func (t temperature) Int64() int64 {
+	if config.Units == unitsMetric {
+		return round(float64(t))
 	}
-	if config.Units == unitsUS {
-		return round(t.Value*(9.0/5.0) + 32.0)
-	}
-	return round((t.Value - 32.0) * (5.0 / 9.0))
+	return round(float64(t)*(9.0/5.0) + 32.0)
 }
 
-// Temperature is a temperature in a specific unit system
-type Temperature struct {
-	Value float64
-	Units units
-}
+// temperature is a temperature in degrees Celsius
+type temperature float64
 
+// units identifies US or Metric units
 type units string
 
 // Weather is weather information
@@ -59,7 +54,7 @@ type Weather struct {
 		Summary  string
 		Icon     string
 		Humidity float64
-		Temp     Temperature
+		Temp     temperature
 		Time     time.Time
 	}
 	Daily  []dailyForecast
