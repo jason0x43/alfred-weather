@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jason0x43/go-alfred"
@@ -73,6 +74,10 @@ func (w *Weather) IsAtNight(t time.Time) bool {
 }
 
 func getWeather(query string) (loc Location, weather Weather, err error) {
+	if err = validateConfig(); err != nil {
+		return
+	}
+
 	expired := time.Now().Sub(cache.Time).Minutes() >= 5.0 ||
 		time.Now().Format("1/2/2016") != cache.Time.Format("1/2/2016") ||
 		cache.Service != config.Service
@@ -121,4 +126,28 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 	}
 
 	return
+}
+
+func validateConfig() error {
+	if config.Service == "" {
+		return fmt.Errorf("Please choose a service")
+	}
+
+	hasKey := false
+	switch config.Service {
+	case serviceDarkSky:
+		hasKey = config.DarkSkyKey != ""
+	case serviceWunderground:
+		hasKey = config.WeatherUndergroundKey != ""
+	}
+
+	if !hasKey {
+		return fmt.Errorf("Please add a API key for %s", config.Service)
+	}
+
+	if config.Location.Name == "" {
+		return fmt.Errorf("Please set a default location")
+	}
+
+	return nil
 }

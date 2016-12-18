@@ -16,7 +16,7 @@ func (c HourlyCommand) About() alfred.CommandDef {
 	return alfred.CommandDef{
 		Keyword:     "hourly",
 		Description: "Get a forecast for the next few hours",
-		IsEnabled:   config.Service != "" && config.ServiceKey != "",
+		IsEnabled:   true,
 	}
 }
 

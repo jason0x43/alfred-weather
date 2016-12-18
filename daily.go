@@ -18,7 +18,7 @@ func (c DailyCommand) About() alfred.CommandDef {
 	return alfred.CommandDef{
 		Keyword:     "daily",
 		Description: "Get a forecast for the next few days",
-		IsEnabled:   config.Service != "" && config.ServiceKey != "",
+		IsEnabled:   true,
 	}
 }
 
