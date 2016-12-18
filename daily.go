@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -30,6 +32,8 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		return
 	}
 
+	addUpdateItem(&items)
+
 	items = append(items, alfred.Item{
 		Title:    "Weather for " + loc.Name,
 		Subtitle: alfred.Line,
@@ -40,7 +44,7 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		deg = "C"
 	}
 
-	items = append(items, getAlertItems(&weather)...)
+	addAlertItems(&weather, &items)
 
 	items = append(items, alfred.Item{
 		Title:    "Currently: " + weather.Current.Summary,
@@ -92,7 +96,25 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	return
 }
 
-func getAlertItems(weather *Weather) (items []alfred.Item) {
+// Do runs the command
+func (c DailyCommand) Do(data string) (out string, err error) {
+	var cfg dailyCfg
+
+	if data != "" {
+		if err := json.Unmarshal([]byte(data), &cfg); err != nil {
+			dlog.Printf("Error unmarshaling tag data: %v", err)
+		}
+	}
+
+	if cfg.ToOpen != "" {
+		dlog.Printf("opening %s", cfg.ToOpen)
+		err = exec.Command("open", cfg.ToOpen).Run()
+	}
+
+	return
+}
+
+func addAlertItems(weather *Weather, items *[]alfred.Item) {
 	now := time.Now()
 
 	for _, alert := range weather.Alerts {
@@ -104,7 +126,7 @@ func getAlertItems(weather *Weather) (items []alfred.Item) {
 			}
 
 			item := alfred.Item{
-				Title:    fmt.Sprintf("Alert: %s", alert.Description),
+				Title:    alert.Description,
 				Subtitle: subtitle,
 				Icon:     "alert.png",
 			}
@@ -113,15 +135,30 @@ func getAlertItems(weather *Weather) (items []alfred.Item) {
 				item.Arg = &alfred.ItemArg{
 					Keyword: "daily",
 					Mode:    alfred.ModeDo,
-					Data:    alfred.Stringify(optionsCfg{ToOpen: alert.URL}),
+					Data:    alfred.Stringify(dailyCfg{ToOpen: alert.URL}),
 				}
 			}
 
-			items = append(items, item)
+			*items = append(*items, item)
 		}
 	}
 
 	return
+}
+
+func addUpdateItem(items *[]alfred.Item) {
+	if latest, available := workflow.UpdateAvailable(false); available {
+		*items = append(*items, alfred.Item{
+			Title:    fmt.Sprintf("Update available: %v", latest.Version),
+			Subtitle: fmt.Sprintf("You have %s", workflow.Version()),
+			Icon:     "notice.png",
+			Arg: &alfred.ItemArg{
+				Keyword: "daily",
+				Mode:    alfred.ModeDo,
+				Data:    alfred.Stringify(dailyCfg{ToOpen: latest.URL}),
+			},
+		})
+	}
 }
 
 func hasHourly(weather Weather, date time.Time) bool {
@@ -132,4 +169,8 @@ func hasHourly(weather Weather, date time.Time) bool {
 		}
 	}
 	return false
+}
+
+type dailyCfg struct {
+	ToOpen string
 }

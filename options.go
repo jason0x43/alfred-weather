@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"reflect"
 	"strconv"
 	"time"
@@ -30,6 +29,8 @@ func (c OptionsCommand) About() alfred.CommandDef {
 func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error) {
 	ct := reflect.TypeOf(config)
 	cfg := reflect.Indirect(reflect.ValueOf(config))
+
+	addUpdateItem(&items)
 
 	for i := 0; i < ct.NumField(); i++ {
 		field := ct.Field(i)
@@ -58,7 +59,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.Service",
 				Title:        fmt.Sprintf("Service: %v", config.Service),
 				Autocomplete: "Service ",
 				Subtitle:     desc,
@@ -78,7 +78,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.Units",
 				Title:        fmt.Sprintf("Units: %v", config.Units),
 				Autocomplete: "Units ",
 				Subtitle:     desc,
@@ -107,7 +106,7 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 						Arg: &alfred.ItemArg{
 							Keyword: "options",
 							Mode:    alfred.ModeDo,
-							Data:    alfred.Stringify(optionsCfg{Config: &opts}),
+							Data:    alfred.Stringify(&opts),
 						},
 					})
 				}
@@ -116,7 +115,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.Location",
 				Title:        "Location: " + config.Location.Name,
 				Subtitle:     desc,
 				Autocomplete: "Location ",
@@ -137,7 +135,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.Icons",
 				Title:        "Icons: " + config.Icons,
 				Subtitle:     desc,
 				Autocomplete: "Icons ",
@@ -152,7 +149,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.DateFormat",
 				Title:        "DateFormat: " + config.DateFormat,
 				Subtitle:     desc,
 				Autocomplete: "DateFormat ",
@@ -167,7 +163,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 			}
 
 			items = append(items, alfred.Item{
-				UID:          workflow.BundleID() + ".config.TimeFormat",
 				Title:        "TimeFormat: " + config.TimeFormat,
 				Subtitle:     desc,
 				Autocomplete: "TimeFormat ",
@@ -175,7 +170,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 
 		default:
 			item := alfred.Item{
-				UID:          workflow.BundleID() + ".config." + field.Name,
 				Title:        field.Name,
 				Subtitle:     desc,
 				Autocomplete: field.Name,
@@ -247,52 +241,27 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 
 	alfred.FuzzySort(items, arg)
 
-	if latest, available := workflow.UpdateAvailable(); available {
-		items = append(items, alfred.Item{
-			Title:    fmt.Sprintf("Update available: %v", latest.Version),
-			Subtitle: fmt.Sprintf("You have %s", workflow.Version()),
-			Arg: &alfred.ItemArg{
-				Keyword: "options",
-				Mode:    alfred.ModeDo,
-				Data:    alfred.Stringify(optionsCfg{ToOpen: latest.URL}),
-			},
-		})
-	}
-
 	return
 }
 
 // Do ...
 func (c OptionsCommand) Do(data string) (out string, err error) {
-	var cfg optionsCfg
-
-	if data != "" {
-		if err := json.Unmarshal([]byte(data), &cfg); err != nil {
-			dlog.Printf("Error unmarshaling tag data: %v", err)
-		}
+	if err = json.Unmarshal([]byte(data), &config); err != nil {
+		return
 	}
 
-	if cfg.ToOpen != "" {
-		dlog.Printf("opening %s", cfg.ToOpen)
-		err = exec.Command("open", cfg.ToOpen).Run()
+	if err = alfred.SaveJSON(configFile, &config); err != nil {
+		log.Printf("Error saving config: %s\n", err)
+		return "Error updating config", err
 	}
 
-	if cfg.Config != nil {
-		if err = alfred.SaveJSON(configFile, cfg.Config); err != nil {
-			log.Printf("Error saving config: %s\n", err)
-			return "Error updating config", err
-		}
-
-		// Clear the cache to allow data to be requestsed with the new options
-		cache.Time = time.Unix(0, 0)
-		if err = alfred.SaveJSON(cacheFile, &cache); err != nil {
-			log.Printf("Error saving cache: %s\n", err)
-		}
-
-		out = "Updated config"
+	// Clear the cache to allow data to be requestsed with the new options
+	cache.Time = time.Unix(0, 0)
+	if err = alfred.SaveJSON(cacheFile, &cache); err != nil {
+		log.Printf("Error saving cache: %s\n", err)
 	}
 
-	return
+	return "Updated config", err
 }
 
 func makeStringChoice(fieldName, value string) alfred.Item {
@@ -305,14 +274,9 @@ func makeStringChoice(fieldName, value string) alfred.Item {
 		Arg: &alfred.ItemArg{
 			Keyword: "options",
 			Mode:    alfred.ModeDo,
-			Data:    alfred.Stringify(optionsCfg{Config: &opts}),
+			Data:    alfred.Stringify(&opts),
 		},
 	}
 	item.AddCheckBox(currentValue == value)
 	return item
-}
-
-type optionsCfg struct {
-	ToOpen string
-	Config *configStruct
 }
