@@ -37,8 +37,6 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 		return
 	}
 
-	addUpdateItem(&items)
-
 	var startTime time.Time
 	if cfg.Start != nil {
 		startTime = *cfg.Start

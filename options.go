@@ -30,8 +30,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 	ct := reflect.TypeOf(config)
 	cfg := reflect.Indirect(reflect.ValueOf(config))
 
-	addUpdateItem(&items)
-
 	for i := 0; i < ct.NumField(); i++ {
 		field := ct.Field(i)
 		desc := field.Tag.Get("desc")

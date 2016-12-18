@@ -38,11 +38,12 @@ var dlog = log.New(os.Stderr, "[weather] ", log.LstdFlags)
 func main() {
 	var err error
 
-	workflow, err = alfred.OpenWorkflow(".", true)
-	if err != nil {
+	if workflow, err = alfred.OpenWorkflow(".", true); err != nil {
 		fmt.Printf("Error: %s", err)
 		os.Exit(1)
 	}
+
+	workflow.UpdateIcon = "notice.png"
 
 	configFile = path.Join(workflow.DataDir(), "config.json")
 	cacheFile = path.Join(workflow.CacheDir(), "cache.json")

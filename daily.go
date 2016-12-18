@@ -32,8 +32,6 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		return
 	}
 
-	addUpdateItem(&items)
-
 	items = append(items, alfred.Item{
 		Title:    "Weather for " + loc.Name,
 		Subtitle: alfred.Line,
@@ -144,21 +142,6 @@ func addAlertItems(weather *Weather, items *[]alfred.Item) {
 	}
 
 	return
-}
-
-func addUpdateItem(items *[]alfred.Item) {
-	if latest, available := workflow.UpdateAvailable(false); available {
-		*items = append(*items, alfred.Item{
-			Title:    fmt.Sprintf("Update available: %v", latest.Version),
-			Subtitle: fmt.Sprintf("You have %s", workflow.Version()),
-			Icon:     "notice.png",
-			Arg: &alfred.ItemArg{
-				Keyword: "daily",
-				Mode:    alfred.ModeDo,
-				Data:    alfred.Stringify(dailyCfg{ToOpen: latest.URL}),
-			},
-		})
-	}
 }
 
 func hasHourly(weather Weather, date time.Time) bool {
