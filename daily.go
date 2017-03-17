@@ -74,8 +74,8 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 
 		item := alfred.Item{
 			Title: date + ": " + conditions,
-			Subtitle: fmt.Sprintf("%d/%d°%s    ☂ %d%%    ☼ %s    ☾ %s",
-				entry.HighTemp.Int64(), entry.LowTemp.Int64(), deg,
+			Subtitle: fmt.Sprintf("↓ %d°%s    ↑ %d°%s    ☂ %d%%    ☼ %s    ☾ %s",
+				entry.LowTemp.Int64(), deg, entry.HighTemp.Int64(), deg,
 				entry.Precip, entry.Sunrise.Format(config.TimeFormat),
 				entry.Sunset.Format(config.TimeFormat)),
 			Icon: getIconFile(icon),
