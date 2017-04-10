@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"reflect"
 	"strconv"
 	"time"
@@ -126,7 +127,7 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 				}
 				for _, dir := range dirs {
 					if dir.IsDir() && alfred.FuzzyMatches(dir.Name(), value) {
-						items = append(items, makeStringChoice("Icons", dir.Name()))
+						items = append(items, makeIconChoice("Icons", dir.Name()))
 					}
 				}
 				return
@@ -276,5 +277,11 @@ func makeStringChoice(fieldName, value string) alfred.Item {
 		},
 	}
 	item.AddCheckBox(currentValue == value)
+	return item
+}
+
+func makeIconChoice(fieldName, value string) alfred.Item {
+	item := makeStringChoice(fieldName, value)
+	item.Icon = path.Join("icons", value, "tstorms.png")
 	return item
 }
