@@ -470,7 +470,7 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>This workflow allows you to get a quick weather forecast from Forecast.io or Weather Underground.</string>
+	<string>This workflow allows you to get a quick weather forecast from Dark Sky or Weather Underground.</string>
 	<key>uidata</key>
 	<dict>
 		<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
