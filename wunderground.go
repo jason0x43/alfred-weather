@@ -19,7 +19,7 @@ var wundIconNames = map[string]string{
 
 const wundAPI = "http://api.wunderground.com/api"
 
-// WeatherUnderground is a Forecast.io service handle
+// WeatherUnderground is a weather service handle
 type WeatherUnderground struct {
 	apiKey string
 }

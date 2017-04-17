@@ -18,7 +18,7 @@ var dsIconNames = map[string]string{
 
 const dsAPI = "https://api.darksky.net/forecast"
 
-// DarkSky is a Forecast.io service handle
+// DarkSky is a weather service handle
 type DarkSky struct {
 	apiKey string
 }
