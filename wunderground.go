@@ -101,9 +101,13 @@ type wundWeather struct {
 			English json.Number `json:"english"`
 			Metric  json.Number `json:"metric"`
 		} `json:"temp"`
+		FeelsLike struct {
+			English json.Number `json:"english"`
+			Metric  json.Number `json:"metric"`
+		} `json:"feelslike"`
 	} `json:"hourly_forecast"`
 	Currently struct {
-		TempC             temperature `json:"temp_c"`
+		TempC             float64     `json:"temp_c"`
 		TempF             float64     `json:"temp_f"`
 		Icon              string      `json:"icon"`
 		Humidity          string      `json:"relative_humidity"`
@@ -180,7 +184,9 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		weather.Current.Humidity = humidity
 	}
 
-	weather.Current.Temp = w.Currently.TempC
+	weather.Current.Temp = temperature(w.Currently.TempC)
+	atemp, _ := w.Currently.FeelsLikeC.Float64()
+	weather.Current.ApparentTemp = temperature(atemp)
 
 	for i, d := range w.Forecast.SimpleForecast.Daily {
 		epoch, _ := d.Date.Epoch.Int64()
@@ -205,6 +211,7 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		epochValue, _ := d.Time.Epoch.Int64()
 		precipChance, _ := d.PrecipChance.Int64()
 		temp, _ := d.Temperature.Metric.Float64()
+		atemp, _ := d.FeelsLike.Metric.Float64()
 		dtime := time.Unix(epochValue, 0)
 
 		nt := ""
@@ -213,11 +220,12 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 		}
 
 		f := hourlyForecast{
-			Time:    dtime,
-			Icon:    nt + fromDSIconName(d.Icon),
-			Precip:  int(precipChance),
-			Temp:    temperature(temp),
-			Summary: d.Summary,
+			Time:         dtime,
+			Icon:         nt + fromDSIconName(d.Icon),
+			Precip:       int(precipChance),
+			Temp:         temperature(temp),
+			ApparentTemp: temperature(atemp),
+			Summary:      d.Summary,
 		}
 		weather.Hourly = append(weather.Hourly, f)
 	}

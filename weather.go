@@ -28,11 +28,12 @@ type dailyForecast struct {
 
 // HourlyForecast represents future weather conditions
 type hourlyForecast struct {
-	Time    time.Time
-	Summary string
-	Icon    string
-	Temp    temperature
-	Precip  int
+	Time         time.Time
+	Summary      string
+	Icon         string
+	Temp         temperature
+	ApparentTemp temperature
+	Precip       int
 }
 
 // Int64 returns the value of the temperature in the currently configured units as an int64
@@ -52,11 +53,12 @@ type units string
 // Weather is weather information
 type Weather struct {
 	Current struct {
-		Summary  string
-		Icon     string
-		Humidity float64
-		Temp     temperature
-		Time     time.Time
+		Summary      string
+		Icon         string
+		Humidity     float64
+		Temp         temperature
+		ApparentTemp temperature
+		Time         time.Time
 	}
 	Daily  []dailyForecast
 	Hourly []hourlyForecast

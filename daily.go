@@ -46,7 +46,7 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 
 	items = append(items, alfred.Item{
 		Title:    "Currently: " + weather.Current.Summary,
-		Subtitle: fmt.Sprintf("%d°%s", weather.Current.Temp.Int64(), deg),
+		Subtitle: fmt.Sprintf("%d°%s (%d°%s)", weather.Current.Temp.Int64(), deg, weather.Current.ApparentTemp.Int64(), deg),
 		Icon:     getIconFile(weather.Current.Icon),
 		Arg: &alfred.ItemArg{
 			Keyword: "hourly",

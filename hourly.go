@@ -69,7 +69,7 @@ func (c HourlyCommand) Items(arg, data string) (items []alfred.Item, err error) 
 
 		item := alfred.Item{
 			Title:    entry.Time.Format("Mon "+config.TimeFormat) + ": " + conditions,
-			Subtitle: fmt.Sprintf("%d°%s    ☂ %d%%", entry.Temp.Int64(), deg, entry.Precip),
+			Subtitle: fmt.Sprintf("%d°%s (%d°%s)   ☂ %d%%", entry.Temp.Int64(), deg, entry.ApparentTemp.Int64(), deg, entry.Precip),
 			Icon:     getIconFile(icon),
 		}
 

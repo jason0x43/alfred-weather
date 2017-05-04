@@ -130,6 +130,7 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 	weather.Current.Icon = fromDSIconName(w.Currently.Icon)
 	weather.Current.Humidity = w.Currently.Humidity * 100
 	weather.Current.Temp = fromDSTemp(w.Currently.Temperature, units)
+	weather.Current.ApparentTemp = fromDSTemp(w.Currently.ApparentTemperature, units)
 
 	for _, d := range w.Daily.Data {
 		f := dailyForecast{
@@ -147,11 +148,12 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 
 	for _, d := range w.Hourly.Data {
 		f := hourlyForecast{
-			Time:    time.Unix(d.Time, 0),
-			Icon:    fromDSIconName(d.Icon),
-			Precip:  int(d.PrecipProbability * 100),
-			Summary: d.Summary,
-			Temp:    fromDSTemp(d.Temp, units),
+			Time:         time.Unix(d.Time, 0),
+			Icon:         fromDSIconName(d.Icon),
+			Precip:       int(d.PrecipProbability * 100),
+			Summary:      d.Summary,
+			Temp:         fromDSTemp(d.Temp, units),
+			ApparentTemp: fromDSTemp(d.ApparentTemp, units),
 		}
 		weather.Hourly = append(weather.Hourly, f)
 	}
