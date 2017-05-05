@@ -32,10 +32,23 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		return
 	}
 
-	items = append(items, alfred.Item{
+	heading := alfred.Item{
 		Title:    "Weather for " + loc.Name,
 		Subtitle: alfred.Line,
-	})
+	}
+
+	if weather.URL != "" {
+		heading.AddMod(alfred.ModCmd, alfred.ItemMod{
+			Subtitle: "Open this forecast in a browser",
+			Arg: &alfred.ItemArg{
+				Keyword: "daily",
+				Mode:    alfred.ModeDo,
+				Data:    alfred.Stringify(&dailyCfg{ToOpen: weather.URL}),
+			},
+		})
+	}
+
+	items = append(items, heading)
 
 	deg := "F"
 	if config.Units == unitsMetric {

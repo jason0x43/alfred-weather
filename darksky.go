@@ -126,6 +126,8 @@ func (f *DarkSky) Forecast(l Location) (weather Weather, err error) {
 
 	units := w.Flags.Units
 
+	weather.URL = fmt.Sprintf("https://darksky.net/forecast/%f,%f", l.Latitude, l.Longitude)
+
 	weather.Current.Summary = w.Currently.Summary
 	weather.Current.Icon = fromDSIconName(w.Currently.Icon)
 	weather.Current.Humidity = w.Currently.Humidity * 100

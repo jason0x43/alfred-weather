@@ -63,6 +63,7 @@ type Weather struct {
 	Daily  []dailyForecast
 	Hourly []hourlyForecast
 	Alerts []alert
+	URL    string
 }
 
 // IsAtNight indicates whether a given time is at night

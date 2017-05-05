@@ -114,6 +114,7 @@ type wundWeather struct {
 		Summary           string      `json:"weather"`
 		FeelsLikeC        json.Number `json:"feelslike_c"`
 		FeelsLikeF        json.Number `json:"feelslike_f"`
+		ForecastURL       string      `json:"forecast_url"`
 		PrecipProbability float64     `json:"precipProbability"`
 		LocalEpoch        json.Number `json:"local_epoc"`
 		LocalTime         string      `json:"local_time_rfc822"`
@@ -168,6 +169,8 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 	if err = json.NewDecoder(resp.Body).Decode(&w); err != nil {
 		return
 	}
+
+	weather.URL = w.Currently.ForecastURL
 
 	for _, a := range w.Alerts {
 		expires, _ := strconv.ParseInt(a.Expires, 10, 64)
