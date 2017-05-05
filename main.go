@@ -79,6 +79,7 @@ func main() {
 		DailyCommand{},
 		HourlyCommand{},
 		OptionsCommand{},
+		RefreshCommand{},
 	}
 
 	workflow.Run(commands)
