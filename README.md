@@ -5,8 +5,7 @@ An [Alfred][alfred] workflow for showing weather forecasts
 
 ![Screenshot](doc/daily.png?raw=true)
 
-This workflow lets you access weather forecasts from [Dark Sky][darksky] and the
-[Weather Underground][wund]. 
+This workflow lets you access weather forecasts from [Dark Sky][darksky].
 
 Installation
 ------------
@@ -20,10 +19,13 @@ The workflow has one top-level command, `wtr`, and three sub-commands, daily (`w
 
 ![Options](doc/options.png?raw=true)
 
-Some options are, well, optional, but the Service and related Key options, and a default location, are required. You need an API key for the service you choose. Both of the currently supported services (Dark Sky and Weather Underground) are free to use (for a reasonable number of requests per day).
+Some options are, well, optional, but the Service and related Key options, and a default location, are required. You need an API key for Dark Sky and is free to use (for a reasonable number of requests per day).
 
 * [Dark Sky API](https://darksky.net/dev/)
-* [Weather Underground API](https://www.wunderground.com/member/registration?mode=api_signup)
+
+You also require a Google Maps API Key, which can be found here.
+
+* [Google Maps API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key)
 
 Once you've entered the service key, selection the "Location" option then enter a ZIP code or city name, then wait a couple of seconds. When it looks like your desired location has been found, press Enter to save it.
 

@@ -10,6 +10,11 @@ import (
 
 const mapAPI = "https://maps.googleapis.com/maps/api"
 
+// Google Maps is used for geolocation
+type GoogleMaps struct {
+	apiKey string
+}
+
 type geoPos struct {
 	Lat float64 `json:"lat"`
 	Lng float64 `json:"lng"`
@@ -65,11 +70,16 @@ type Timezone struct {
 	UTCOffset int64
 }
 
+// NewGoogleMaps returns a new GoogleMaps handle
+func NewGoogleMaps(apiKey string) GoogleMaps {
+	return GoogleMaps{apiKey: apiKey}
+}
+
 // Locate returns the geocode for a location
-func Locate(location string) (l Geocode, err error) {
+func (f *GoogleMaps) Locate(location string) (l Geocode, err error) {
 	dlog.Printf("Locating %s", location)
 
-	url := fmt.Sprintf("%s/geocode/json", mapAPI)
+	url := fmt.Sprintf("%s/geocode/json/&key=%s", mapAPI, f.apiKey)
 
 	params := map[string]string{"address": location, "sensor": "false"}
 	var content []byte

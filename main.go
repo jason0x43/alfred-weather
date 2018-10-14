@@ -17,7 +17,7 @@ var workflow alfred.Workflow
 type configStruct struct {
 	Service               string   `desc:"Service to use"`
 	DarkSkyKey            string   `desc:"Your API key for Dark Sky"`
-	WeatherUndergroundKey string   `desc:"Your API key for Weather Underground"`
+	GoogleMapsKey         string   `desc:"Your API key for Google Maps"`
 	Icons                 string   `desc:"Icon set"`
 	DateFormat            string   `desc:"Date format"`
 	TimeFormat            string   `desc:"Time format"`
