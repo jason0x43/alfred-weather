@@ -90,24 +90,26 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 						Subtitle: "Enter a new city/state or ZIP",
 					})
 				} else {
-					var location Geocode
-					if location, err = Locate(value); err != nil {
+					var locations []Geocode
+					if locations, err = Locate(value); err != nil {
 						return
 					}
 
-					opts := config
-					o := reflect.Indirect(reflect.ValueOf(&opts))
-					o.FieldByName("Location").Set(reflect.ValueOf(location.Location()))
+					for _, loc := range locations {
+						opts := config
+						o := reflect.Indirect(reflect.ValueOf(&opts))
+						o.FieldByName("Location").Set(reflect.ValueOf(loc.Location()))
 
-					items = append(items, alfred.Item{
-						Title:    location.Name,
-						Subtitle: fmt.Sprintf("(%f, %f)", location.Latitude, location.Longitude),
-						Arg: &alfred.ItemArg{
-							Keyword: "options",
-							Mode:    alfred.ModeDo,
-							Data:    alfred.Stringify(&opts),
-						},
-					})
+						items = append(items, alfred.Item{
+							Title:    loc.Name,
+							Subtitle: fmt.Sprintf("(%f, %f)", loc.Latitude, loc.Longitude),
+							Arg: &alfred.ItemArg{
+								Keyword: "options",
+								Mode:    alfred.ModeDo,
+								Data:    alfred.Stringify(&opts),
+							},
+						})
+					}
 				}
 
 				return

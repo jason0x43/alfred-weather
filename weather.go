@@ -91,10 +91,11 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 	}
 
 	if query != "" {
-		var geo Geocode
-		if geo, err = Locate(query); err != nil {
+		var geos []Geocode
+		if geos, err = Locate(query); err != nil {
 			return
 		}
+		geo := geos[0]
 		loc = geo.Location()
 		dlog.Printf("got location")
 	} else {

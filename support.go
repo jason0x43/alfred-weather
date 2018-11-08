@@ -23,7 +23,6 @@ func round(val float64) int64 {
 type Location struct {
 	Latitude  float64
 	Longitude float64
-	Timezone  string
 	ShortName string
 	Name      string
 }

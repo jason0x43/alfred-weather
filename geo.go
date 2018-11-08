@@ -5,50 +5,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
+	"strconv"
 )
 
-const mapAPI = "https://maps.googleapis.com/maps/api"
-
-type geoPos struct {
-	Lat float64 `json:"lat"`
-	Lng float64 `json:"lng"`
-}
-
-type geoBounds struct {
-	Northeast geoPos `json:"northeast"`
-	Southwest geoPos `json:"southwest"`
-}
+const mapAPI = "https://nominatim.openstreetmap.org/search"
 
 type geoLocation struct {
-	AddressComponents []struct {
-		LongName  string   `json:"long_name"`
-		ShortName string   `json:"short_name"`
-		Types     []string `json:"types"`
-	} `json:"address_components"`
-	FormattedAddress string `json:"formatted_address"`
-	Geometry         struct {
-		Bounds       geoBounds `json:"bounds"`
-		Location     geoPos    `json:"location"`
-		LocationType string    `json:"location_type"`
-		Viewport     geoBounds `json:"viewport"`
-	} `json:"geometry"`
-	PlaceID string   `json:"place_id"`
-	Types   []string `json:"types"`
+	FormattedAddress string `json:"display_name"`
+	Lat              string `json:"lat"`
+	Lng              string `json:"lon"`
 }
 
-type geoResults struct {
-	Status  string        `json:"status"`
-	Results []geoLocation `json:"results"`
-}
-
-type tzResults struct {
-	DstOffset    int64  `json:"dstOffset"`
-	RawOffset    int64  `json:"rawOffset"`
-	Status       string `json:"status"`
-	TimeZoneID   string `json:"timeZoneId"`
-	TimeZoneName string `json:"timeZoneName"`
-}
+type geoResults []geoLocation
 
 // Geocode is a geographic location
 type Geocode struct {
@@ -57,39 +25,33 @@ type Geocode struct {
 	Longitude float64
 }
 
-// Timezone is a timezone
-type Timezone struct {
-	Name      string
-	ID        string
-	DSTOffset int64
-	UTCOffset int64
-}
-
-// Locate returns the geocode for a location
-func Locate(location string) (l Geocode, err error) {
+// Locate returns the possible geocodes for a location
+func Locate(location string) (l []Geocode, err error) {
 	dlog.Printf("Locating %s", location)
 
-	url := fmt.Sprintf("%s/geocode/json", mapAPI)
+	url := fmt.Sprintf("%s", mapAPI)
 
-	params := map[string]string{"address": location, "sensor": "false"}
+	params := map[string]string{"q": location, "format": "json", "addressDetails": "1"}
 	var content []byte
 	if content, err = get(url, params); err != nil {
 		return
 	}
+
+	dlog.Printf("Gt results: %s", content)
 
 	var r geoResults
 	if err = json.Unmarshal(content, &r); err != nil {
 		return
 	}
 
-	if r.Status != "OK" {
-		return l, fmt.Errorf(r.Status)
+	for _, res := range r {
+		loc := &(res)
+		var gc Geocode
+		gc.Name = loc.FormattedAddress
+		gc.Latitude, _ = strconv.ParseFloat(loc.Lat, 64)
+		gc.Longitude, _ = strconv.ParseFloat(loc.Lng, 64)
+		l = append(l, gc)
 	}
-
-	loc := &(r.Results[0])
-	l.Name = loc.FormattedAddress
-	l.Latitude = loc.Geometry.Location.Lat
-	l.Longitude = loc.Geometry.Location.Lng
 
 	return
 }
@@ -100,36 +62,6 @@ func (g *Geocode) Location() (l Location) {
 	l.Longitude = g.Longitude
 	l.Name = g.Name
 	l.ShortName = g.Name
-	return
-}
-
-// GetTimezone returns the timezone for a geocode
-func GetTimezone(lat float64, lng float64) (tz Timezone, err error) {
-	url := fmt.Sprintf("%s/timezone/json", mapAPI)
-
-	params := map[string]string{
-		"location":  fmt.Sprintf("%f,%f", lat, lng),
-		"timestamp": fmt.Sprintf("%d", time.Now().Unix()),
-	}
-	var content []byte
-	if content, err = get(url, params); err != nil {
-		return
-	}
-
-	var t tzResults
-	if err = json.Unmarshal(content, &t); err != nil {
-		return
-	}
-
-	if t.Status != "OK" {
-		return tz, fmt.Errorf(t.Status)
-	}
-
-	tz.Name = t.TimeZoneName
-	tz.ID = t.TimeZoneID
-	tz.DSTOffset = t.DstOffset
-	tz.UTCOffset = t.RawOffset
-
 	return
 }
 
