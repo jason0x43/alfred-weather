@@ -203,8 +203,11 @@ func (f *WeatherUnderground) Forecast(l Location) (weather Weather, err error) {
 			Summary:  d.Summary,
 			HighTemp: temperature(highTemp),
 			LowTemp:  temperature(lowTemp),
-			Sunrise:  w.Astronomy[i].Sunrise.Date.toTime(),
-			Sunset:   w.Astronomy[i].Sunset.Date.toTime(),
+		}
+
+		if len(w.Astronomy) >= i {
+			f.Sunrise = w.Astronomy[i].Sunrise.Date.toTime()
+			f.Sunset = w.Astronomy[i].Sunset.Date.toTime()
 		}
 
 		weather.Daily = append(weather.Daily, f)
