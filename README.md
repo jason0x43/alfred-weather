@@ -1,6 +1,17 @@
 alfred-weather
 ==============
 
+Deprecation Notice
+------------------
+
+The Wunderground API has been [shut down since 2018-09-06 per their announcement](https://apicommunity.wunderground.com/weatherapi/topics/end-of-service-for-the-weather-underground-api).
+
+Additionally, [Dark Sky was purchased by Apple](https://blog.darksky.net/dark-sky-has-a-new-home/), and has sunset their API, issueing no new keys, and will cease servie at the end of 2021.
+
+As a result, this Alfred Workflow can only be enjoyed by anyone who already has a Dark Sky API key.
+
+* * * 
+
 An [Alfred][alfred] workflow for showing weather forecasts
 
 ![Screenshot](doc/daily.png?raw=true)
