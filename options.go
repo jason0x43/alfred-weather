@@ -50,10 +50,6 @@ func (c OptionsCommand) Items(arg, data string) (items []alfred.Item, err error)
 					items = append(items, makeStringChoice("Service", string(serviceDarkSky)))
 				}
 
-				if alfred.FuzzyMatches(string(serviceWunderground), value) {
-					items = append(items, makeStringChoice("Service", string(serviceWunderground)))
-				}
-
 				return
 			}
 

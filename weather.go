@@ -110,11 +110,6 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}
-		case serviceWunderground:
-			service := NewWeatherUnderground(config.WeatherUndergroundKey)
-			if weather, err = service.Forecast(loc); err != nil {
-				return
-			}
 		}
 
 		if loc.Name == config.Location.Name {
@@ -141,8 +136,6 @@ func validateConfig() error {
 	switch config.Service {
 	case serviceDarkSky:
 		hasKey = config.DarkSkyKey != ""
-	case serviceWunderground:
-		hasKey = config.WeatherUndergroundKey != ""
 	}
 
 	if !hasKey {
