@@ -85,13 +85,25 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 			date = entry.Date.Format("Monday")
 		}
 
+		parts := []string{
+			fmt.Sprintf("↓ %d°%s", entry.LowTemp.Int64(), deg),
+			fmt.Sprintf("↑ %d°%s", entry.HighTemp.Int64(), deg),
+		}
+
+		if entry.Precip != -1 {
+			parts = append(parts, fmt.Sprintf("☂ %d%%", entry.Precip))
+		}
+
+		parts = append(
+			parts,
+			fmt.Sprintf("☼ %s", entry.Sunrise.Format(config.TimeFormat)),
+			fmt.Sprintf("☾ %s", entry.Sunset.Format(config.TimeFormat)),
+		)
+
 		item := alfred.Item{
-			Title: date + ": " + conditions,
-			Subtitle: fmt.Sprintf("↓ %d°%s    ↑ %d°%s    ☂ %d%%    ☼ %s    ☾ %s",
-				entry.LowTemp.Int64(), deg, entry.HighTemp.Int64(), deg,
-				entry.Precip, entry.Sunrise.Format(config.TimeFormat),
-				entry.Sunset.Format(config.TimeFormat)),
-			Icon: getIconFile(icon),
+			Title:    date + ": " + conditions,
+			Subtitle: strings.Join(parts, "    "),
+			Icon:     getIconFile(icon),
 		}
 
 		if hasHourly(weather, entry.Date) {

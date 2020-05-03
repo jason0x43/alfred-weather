@@ -36,7 +36,8 @@ type hourlyForecast struct {
 	Precip       int
 }
 
-// Int64 returns the value of the temperature in the currently configured units as an int64
+// Int64 returns the value of the temperature in the currently configured units
+// as an int64. Temperatures are assumed to be in Celsius by default
 func (t temperature) Int64() int64 {
 	if config.Units == unitsMetric {
 		return round(float64(t))
@@ -110,6 +111,11 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}
+		case serviceOpenWeather:
+			service := NewOpenWeather(config.OpenWeatherKey)
+			if weather, err = service.Forecast(loc); err != nil {
+				return
+			}
 		}
 
 		if loc.Name == config.Location.Name {
@@ -136,6 +142,8 @@ func validateConfig() error {
 	switch config.Service {
 	case serviceDarkSky:
 		hasKey = config.DarkSkyKey != ""
+	case serviceOpenWeather:
+		hasKey = config.OpenWeatherKey != ""
 	}
 
 	if !hasKey {

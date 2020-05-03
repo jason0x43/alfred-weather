@@ -15,13 +15,14 @@ var configFile string
 var workflow alfred.Workflow
 
 type configStruct struct {
-	Service               string   `desc:"Service to use"`
-	DarkSkyKey            string   `desc:"Your API key for Dark Sky"`
-	Icons                 string   `desc:"Icon set"`
-	DateFormat            string   `desc:"Date format"`
-	TimeFormat            string   `desc:"Time format"`
-	Location              Location `desc:"Default location"`
-	Units                 units    `desc:"Units"`
+	Service        string   `desc:"Service to use"`
+	DarkSkyKey     string   `desc:"Your API key for Dark Sky"`
+	OpenWeatherKey string   `desc:"Your API key for OpenWeather"`
+	Icons          string   `desc:"Icon set"`
+	DateFormat     string   `desc:"Date format"`
+	TimeFormat     string   `desc:"Time format"`
+	Location       Location `desc:"Default location"`
+	Units          units    `desc:"Units"`
 }
 
 var config configStruct

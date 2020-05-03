@@ -12,7 +12,10 @@ An [Alfred][alfred] workflow for showing weather forecasts
 
 ![Screenshot](doc/daily.png?raw=true)
 
-This workflow lets you access weather forecasts from [Dark Sky][darksky].
+This workflow lets you access weather forecasts from several APIs:
+
+- [Dark Sky][darksky].
+- [OpenWeather][openweather].
 
 ## Installation
 
@@ -24,9 +27,10 @@ The workflow has one top-level command, `wtr`, and three sub-commands, daily (`w
 
 ![Options](doc/options.png?raw=true)
 
-Some options are, well, optional, but the Service and related Key options, and a default location, are required. You need an API key for the service you choose. Dark Sky, assuming you have a working API key, is free to use (for a reasonable number of requests per day).
+Some options are, well, optional, but the Service and related Key options, and a default location, are required. You need an API key for the service you choose. Both of the currently supported services (Dark Sky and OpenWeather) are free to use (for a reasonable number of requests per day).
 
-- [Dark Sky API](https://darksky.net/dev/)
+- [Dark Sky API](https://darksky.net/dev/) (no longer offering new API keys)
+- [OpenWeather API](https://openweathermap.org/api)
 
 Once you've entered the service key, selection the "Location" option then enter a ZIP code or city name, then wait a couple of seconds. When it looks like your desired location has been found, press Enter to save it.
 
@@ -62,3 +66,4 @@ The package includes a number of icon sets from the [Weather Underground](wund) 
 [icons]: http://www.weathericonsets.com
 [wund]: http://www.weatherunderground.com
 [darksky]: http://darksky.net
+[openweather]: http://openweathermap.org
