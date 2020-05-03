@@ -18,6 +18,7 @@ type configStruct struct {
 	Service        string   `desc:"Service to use"`
 	DarkSkyKey     string   `desc:"Your API key for Dark Sky"`
 	OpenWeatherKey string   `desc:"Your API key for OpenWeather"`
+	ClimaCellKey   string   `desc:"Your API key for ClimaCell"`
 	Icons          string   `desc:"Icon set"`
 	DateFormat     string   `desc:"Date format"`
 	TimeFormat     string   `desc:"Time format"`

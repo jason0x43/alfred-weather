@@ -90,6 +90,8 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 			fmt.Sprintf("↑ %d°%s", entry.HighTemp.Int64(), deg),
 		}
 
+		dlog.Printf("precip: %d\n", entry.Precip)
+
 		if entry.Precip != -1 {
 			parts = append(parts, fmt.Sprintf("☂ %d%%", entry.Precip))
 		}

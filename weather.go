@@ -116,6 +116,11 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}
+		case serviceClimaCell:
+			service := NewClimaCell(config.ClimaCellKey)
+			if weather, err = service.Forecast(loc); err != nil {
+				return
+			}
 		}
 
 		if loc.Name == config.Location.Name {
@@ -144,10 +149,12 @@ func validateConfig() error {
 		hasKey = config.DarkSkyKey != ""
 	case serviceOpenWeather:
 		hasKey = config.OpenWeatherKey != ""
+	case serviceClimaCell:
+		hasKey = config.ClimaCellKey != ""
 	}
 
 	if !hasKey {
-		return fmt.Errorf("Please add a API key for %s", config.Service)
+		return fmt.Errorf("Please add an API key for %s", config.Service)
 	}
 
 	if config.Location.Name == "" {

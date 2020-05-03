@@ -11,8 +11,9 @@ const (
 	unitsUS     units = "US"
 	unitsMetric units = "Metric"
 
-	serviceDarkSky      = "Dark Sky"
-	serviceOpenWeather  = "OpenWeather"
+	serviceDarkSky     = "Dark Sky"
+	serviceOpenWeather = "OpenWeather"
+	serviceClimaCell   = "ClimaCell"
 )
 
 func round(val float64) int64 {
