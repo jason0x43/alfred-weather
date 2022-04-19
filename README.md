@@ -84,7 +84,7 @@ Almost done! cd into the `alfred-weather` folder, run `go mod tidy` to grab the 
 
 ![image](https://user-images.githubusercontent.com/30350506/164045016-aaf98cca-3850-414b-bc96-0592b9b56d28.png)
 
-That's it! Run `alfred build` every time you make changes to the go code, but otherwise, you're all done!
+That's it! Run `alfred build` every time you make changes to the go code, but otherwise, you're all done! 
 
 ## Credits
 
