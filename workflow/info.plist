@@ -241,14 +241,6 @@
 			<integer>1</integer>
 		</dict>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.hidealfred</string>
-			<key>uid</key>
-			<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
@@ -264,6 +256,14 @@
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1124,8 +1124,10 @@ This is also a fork of https://github.com/jason0x43/alfred-weather</string>
 			<integer>90</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>1.6.0</string>
+	<string>1.6.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/SoPat712/alfred-weather</string>
 </dict>
