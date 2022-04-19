@@ -56,6 +56,36 @@ If there is a newer version of the workflow available, a message will be display
 
 ![Update notice](doc/update.png?raw=true)
 
+## Building from source
+
+### macOS Instructions
+
+Start by first grabbing the alfred go file made by jason0x43 with `git clone https://github.com/jason0x43/go-alfred`
+
+Then, if you haven't already, grab a version of golang from the [website.](https://openweathermap.org/api)
+
+After `cd`ing into your go-alfred/alfred folder, and having installed golang, run `go build main.go`
+
+This produces a binary named “main”, but I recommend renaming it to “alfred” for ease of use. I also recommend adding it to path. Run `cp alfred /usr/local/bin` to copy it into your bin, run `chmod 755 /usr/local/bin/alfred` to make it executable, and add this line , `export PATH=/usr/local/bin/alfred:$PATH`, to your ~/.zshrc or ~/.bashrc to allow you to run alfred from anywhere.
+
+Now for the real work. Go to your repo storage folder, run `git clone https://github.com/jason0x43/alfred-weather` to clone this repo, cd into `alfred-weather/workflow`, and run `alfred link`. This will make a symlink so that alfred can see your workflow. 
+
+The version should be 1.6.0-pre and look like this
+
+![image](https://user-images.githubusercontent.com/30350506/164043476-64446bad-7a14-4069-a0b2-7ba7442ba1df.png)
+
+Almost done! cd into the `alfred-weather` folder, run `go mod tidy` to grab the necessary packages, and finally, run `alfred build`. You will notice a new binary in your workflow folder called `alfred-weather`
+
+#### Before 
+
+![image](https://user-images.githubusercontent.com/30350506/164044894-1a659336-4dfa-4266-a921-e138502638d4.png)
+
+#### After
+
+![image](https://user-images.githubusercontent.com/30350506/164045016-aaf98cca-3850-414b-bc96-0592b9b56d28.png)
+
+That's it! Run `alfred build` every time you make changes to the go code, but otherwise, you're all done!
+
 ## Credits
 
 The package includes a number of icon sets from the [Weather Underground](wund) and from [weathericonsets.com][icons] (I'm not up to drawing weather icons yet). Each set includes an `info.json` file that gives a short description and provides a source URL for the icon set.
