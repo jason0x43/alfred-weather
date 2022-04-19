@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.jason0x43.alfred-weather</string>
+	<string>com.sopat712.alfred-weather</string>
+	<key>category</key>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
@@ -1127,7 +1129,7 @@ This is also a fork of https://github.com/jason0x43/alfred-weather</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.6.3</string>
+	<string>1.6.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/SoPat712/alfred-weather</string>
 </dict>
