@@ -478,7 +478,7 @@
 				<string></string>
 				<key>script</key>
 				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
-readonly remote_info_plist='https://github.com/SoPat712/alfred-weather/blob/master/workflow/info.plist'
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
 readonly frequency_check='0'
@@ -601,7 +601,7 @@ fi</string>
 				<string></string>
 				<key>script</key>
 				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
-readonly remote_info_plist='https://github.com/SoPat712/alfred-weather/blob/master/workflow/info.plist'
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
 readonly frequency_check='0'
@@ -773,7 +773,7 @@ fi</string>
 				<string></string>
 				<key>script</key>
 				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
-readonly remote_info_plist='https://github.com/SoPat712/alfred-weather/blob/master/workflow/info.plist'
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
 readonly frequency_check='0'
@@ -896,7 +896,7 @@ fi</string>
 				<string></string>
 				<key>script</key>
 				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
-readonly remote_info_plist='https://github.com/SoPat712/alfred-weather/blob/master/workflow/info.plist'
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
 readonly frequency_check='0'
@@ -994,7 +994,7 @@ fi</string>
 	<key>readme</key>
 	<string>This workflow allows you to get a quick weather forecast from Dark Sky or Weather Underground.
 
-This is also a fork of https://github.com/jason0x43/alfred-weather</string>
+This is a fork of https://github.com/jason0x43/alfred-weather, with some extra features.</string>
 	<key>uidata</key>
 	<dict>
 		<key>0F7F546E-A1BD-4925-860C-11BB9D59404A</key>
@@ -1129,7 +1129,7 @@ This is also a fork of https://github.com/jason0x43/alfred-weather</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.6.4</string>
+	<string>1.7.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/SoPat712/alfred-weather</string>
 </dict>
