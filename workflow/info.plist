@@ -481,7 +481,7 @@
 readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
-readonly frequency_check='0'
+readonly frequency_check='1'
 
 # FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
 function abort {
@@ -604,7 +604,7 @@ fi</string>
 readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
-readonly frequency_check='0'
+readonly frequency_check='1'
 
 # FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
 function abort {
@@ -776,7 +776,7 @@ fi</string>
 readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
-readonly frequency_check='0'
+readonly frequency_check='1'
 
 # FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
 function abort {
@@ -899,7 +899,7 @@ fi</string>
 readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
 readonly workflow_url='sopat712/alfred-weather'
 readonly download_type='github_release'
-readonly frequency_check='0'
+readonly frequency_check='1'
 
 # FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
 function abort {
@@ -1129,7 +1129,7 @@ This is a fork of https://github.com/jason0x43/alfred-weather, with some extra f
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.7.0</string>
+	<string>1.7.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/SoPat712/alfred-weather</string>
 </dict>
