@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var ccIconNames = map[string]string{
+var tmIconNames = map[string]string{
 	"clear":               "clear",
 	"mostly_clear":        "mostlysunny",
 	"partly_cloudy":       "partlycloudy",
@@ -34,7 +34,7 @@ var ccIconNames = map[string]string{
 	"freezing_rain_heavy": "sleet",
 }
 
-var ccDescriptions = map[string]string{
+var tmDescriptions = map[string]string{
 	"clear":               "Clear",
 	"mostly_clear":        "Mostly sunny",
 	"partly_cloudy":       "Partly cloudy",
@@ -60,70 +60,70 @@ var ccDescriptions = map[string]string{
 	"freezing_rain_heavy": "Heavy freezing rain",
 }
 
-const ccAPI = "https://api.climacell.co/v3/weather"
+const tmAPI = "https://api.Tomorrow.io/v4/weather"
 
-const ccUnits = "si"
+const tmUnits = "si"
 
-// ClimaCell is a weather service handle
-type ClimaCell struct {
+// TomorrowIO is a weather service handle
+type TomorrowIO struct {
 	apiKey string
 }
 
-type ccFloatValue struct {
+type tmFloatValue struct {
 	Value float64 `json:"value"`
 	Units string  `json:"units"`
 }
 
-type ccIntValue struct {
+type tmIntValue struct {
 	Value int    `json:"value"`
 	Units string `json:"units"`
 }
 
-type ccStringValue struct {
+type tmStringValue struct {
 	Value string `json:"value"`
 }
 
-type ccCurrent struct {
-	Temp         ccFloatValue  `json:"temp"`
-	ApparentTemp ccFloatValue  `json:"feels_like"`
-	Humidity     ccFloatValue  `json:"humidity"`
-	WeatherCode  ccStringValue `json:"weather_code"`
-	Time         ccStringValue `json:"observation_time"`
+type tmCurrent struct {
+	Temp         tmFloatValue  `json:"temp"`
+	ApparentTemp tmFloatValue  `json:"feels_like"`
+	Humidity     tmFloatValue  `json:"humidity"`
+	WeatherCode  tmStringValue `json:"weather_code"`
+	Time         tmStringValue `json:"observation_time"`
 }
 
-type ccDaily struct {
+type tmDaily struct {
 	Temp []struct {
 		Time string       `json:"observation_time"`
-		Min  ccFloatValue `json:"min"`
-		Max  ccFloatValue `json:"max"`
+		Min  tmFloatValue `json:"min"`
+		Max  tmFloatValue `json:"max"`
 	} `json:"temp"`
-	PrecipProbability ccIntValue `json:"precipitation_probability"`
+	PrecipProbability tmIntValue `json:"precipitation_probability"`
 	ApparentTemp      []struct {
 		Time string       `json:"observation_time"`
-		Min  ccFloatValue `json:"min"`
-		Max  ccFloatValue `json:"max"`
+		Min  tmFloatValue `json:"min"`
+		Max  tmFloatValue `json:"max"`
 	} `json:"feels_like"`
-	SunriseTime ccStringValue `json:"sunrise"`
-	SunsetTime  ccStringValue `json:"sunset"`
-	Date        ccStringValue `json:"observation_time"`
-	WeatherCode ccStringValue `json:"weather_code"`
+	SunriseTime tmStringValue `json:"sunrise"`
+	SunsetTime  tmStringValue `json:"sunset"`
+	Date        tmStringValue `json:"observation_time"`
+	WeatherCode tmStringValue `json:"weather_code"`
 }
 
-type ccHourly struct {
-	Temp              ccFloatValue  `json:"temp"`
-	ApparentTemp      ccFloatValue  `json:"feels_like"`
-	PrecipProbability ccIntValue    `json:"precipitation_probability"`
-	Time              ccStringValue `json:"observation_time"`
-	WeatherCode       ccStringValue `json:"weather_code"`
+type tmHourly struct {
+	Temp              tmFloatValue  `json:"temp"`
+	ApparentTemp      tmFloatValue  `json:"feels_like"`
+	PrecipProbability tmIntValue    `json:"precipitation_probability"`
+	Time              tmStringValue `json:"observation_time"`
+	WeatherCode       tmStringValue `json:"weather_code"`
 }
 
-// NewClimaCell returns a new ClimaCell handle
-func NewClimaCell(apiKey string) ClimaCell {
-	return ClimaCell{apiKey: apiKey}
+// NewTomorrowIO returns a new TomorrowIO handle
+func NewTomorrowIO(apiKey string) TomorrowIO {
+	return TomorrowIO{apiKey: apiKey}
 }
 
 // Forecast returns the forecast for a given location
-func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
+func (f *TomorrowIO) Forecast(l Location) (weather Weather, err error) {
 	dlog.Printf("getting forecast for %#v", l)
 
 	hourly, err := f.HourlyForecast(l)
@@ -141,10 +141,10 @@ func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
 		return
 	}
 
-	weather.URL = fmt.Sprintf("%s?lat=%f&lon=%f&units=%s", ccAPI, l.Latitude, l.Longitude, ccUnits)
+	weather.URL = fmt.Sprintf("%s?lat=%f&lon=%f&units=%s", tmAPI, l.Latitude, l.Longitude, tmUnits)
 
-	weather.Current.Summary = ccDescriptions[current.WeatherCode.Value]
-	weather.Current.Icon = ccIconNames[current.WeatherCode.Value]
+	weather.Current.Summary = tmDescriptions[current.WeatherCode.Value]
+	weather.Current.Icon = tmIconNames[current.WeatherCode.Value]
 	weather.Current.Humidity = current.Humidity.Value
 	weather.Current.Temp = temperature(current.Temp.Value)
 	weather.Current.ApparentTemp = temperature(current.ApparentTemp.Value)
@@ -161,8 +161,8 @@ func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
 
 		f := dailyForecast{
 			Date:     parseDate(d.Date.Value),
-			Icon:     ccIconNames[d.WeatherCode.Value],
-			Summary:  ccDescriptions[d.WeatherCode.Value],
+			Icon:     tmIconNames[d.WeatherCode.Value],
+			Summary:  tmDescriptions[d.WeatherCode.Value],
 			HighTemp: temperature(highTemp),
 			LowTemp:  temperature(lowTemp),
 			Sunrise:  parseTime(d.SunriseTime.Value),
@@ -177,8 +177,8 @@ func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
 	for _, d := range hourly {
 		f := hourlyForecast{
 			Time:         parseTime(d.Time.Value),
-			Icon:         ccIconNames[d.WeatherCode.Value],
-			Summary:      ccDescriptions[d.WeatherCode.Value],
+			Icon:         tmIconNames[d.WeatherCode.Value],
+			Summary:      tmDescriptions[d.WeatherCode.Value],
 			Temp:         temperature(d.Temp.Value),
 			ApparentTemp: temperature(d.ApparentTemp.Value),
 			Precip:       d.PrecipProbability.Value,
@@ -189,18 +189,18 @@ func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
 	return
 }
 
-func (f *ClimaCell) DailyForecast(l Location) (data []ccDaily, err error) {
+func (f *TomorrowIO) DailyForecast(l Location) (data []tmDaily, err error) {
 	dlog.Printf("getting daily forecast for %#v", l)
 
 	query := url.Values{}
 	query.Set("lat", fmt.Sprintf("%f", l.Latitude))
 	query.Set("lon", fmt.Sprintf("%f", l.Longitude))
 	query.Set("apikey", f.apiKey)
-	query.Set("unit_system", ccUnits)
+	query.Set("unit_system", tmUnits)
 	query.Set("start_time", "now")
 	query.Set("fields", "temp,feels_like,precipitation_probability,weather_code,sunrise,sunset")
 
-	url := fmt.Sprintf("%s/forecast/daily?%s", ccAPI, query.Encode())
+	url := fmt.Sprintf("%s/forecast/daily?%s", tmAPI, query.Encode())
 
 	dlog.Printf("getting URL %s", url)
 
@@ -223,17 +223,17 @@ func (f *ClimaCell) DailyForecast(l Location) (data []ccDaily, err error) {
 	return
 }
 
-func (f *ClimaCell) HourlyForecast(l Location) (data []ccHourly, err error) {
+func (f *TomorrowIO) HourlyForecast(l Location) (data []tmHourly, err error) {
 	dlog.Printf("getting hourly forecast for %#v", l)
 
 	query := url.Values{}
 	query.Set("lat", fmt.Sprintf("%f", l.Latitude))
 	query.Set("lon", fmt.Sprintf("%f", l.Longitude))
 	query.Set("apikey", f.apiKey)
-	query.Set("unit_system", ccUnits)
+	query.Set("unit_system", tmUnits)
 	query.Set("fields", "temp,feels_like,precipitation_probability,weather_code")
 
-	url := fmt.Sprintf("%s/forecast/hourly?%s", ccAPI, query.Encode())
+	url := fmt.Sprintf("%s/forecast/hourly?%s", tmAPI, query.Encode())
 
 	var request *http.Request
 	if request, err = http.NewRequest("GET", url, nil); err != nil {
@@ -254,17 +254,17 @@ func (f *ClimaCell) HourlyForecast(l Location) (data []ccHourly, err error) {
 	return
 }
 
-func (f *ClimaCell) CurrentConditions(l Location) (data ccCurrent, err error) {
+func (f *TomorrowIO) CurrentConditions(l Location) (data tmCurrent, err error) {
 	dlog.Printf("getting current conditions for %#v", l)
 
 	query := url.Values{}
 	query.Set("lat", fmt.Sprintf("%f", l.Latitude))
 	query.Set("lon", fmt.Sprintf("%f", l.Longitude))
 	query.Set("apikey", f.apiKey)
-	query.Set("unit_system", ccUnits)
+	query.Set("unit_system", tmUnits)
 	query.Set("fields", "temp,feels_like,weather_code,humidity")
 
-	url := fmt.Sprintf("%s/realtime?%s", ccAPI, query.Encode())
+	url := fmt.Sprintf("%s/realtime?%s", tmAPI, query.Encode())
 
 	dlog.Printf("getting URL %s", url)
 

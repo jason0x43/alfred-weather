@@ -6,7 +6,7 @@ An [Alfred][alfred] workflow for showing weather forecasts
 
 This workflow lets you access weather forecasts from several APIs:
 
-- [ClimaCell][climacell]
+- [TomorrowIO][TomorrowIO]
 - [OpenWeather][openweather]
 - [Dark Sky][darksky]\*
 
@@ -27,7 +27,7 @@ The workflow has one top-level command, `wtr`, and three sub-commands, daily (`w
 Some options are, well, optional, but the Service and related Key options, and a default location, are required. You need an API key for the service you choose. Both of the currently supported services (Dark Sky and OpenWeather) are free to use (for a reasonable number of requests per day).
 
 - [OpenWeather API](https://openweathermap.org/api)
-- [ClimaCell API](https://developer.climacell.co)
+- [TomorrowIO API](https://developer.TomorrowIO.co)
 - [Dark Sky API](https://darksky.net/dev/) (no longer offering new API keys)
 
 Once you've entered the service key, selection the "Location" option then enter a ZIP code or city name, then wait a couple of seconds. When it looks like your desired location has been found, press Enter to save it.
@@ -95,4 +95,4 @@ The package includes a number of icon sets from the [Weather Underground](wund) 
 [wund]: https://www.weatherunderground.com
 [darksky]: https://darksky.net
 [openweather]: https://openweathermap.org
-[climacell]: https://climacell.co
+[TomorrowIO]: https://Tomorrow.io

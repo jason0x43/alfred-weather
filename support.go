@@ -13,7 +13,7 @@ const (
 
 	serviceDarkSky     = "Dark Sky"
 	serviceOpenWeather = "OpenWeather"
-	serviceClimaCell   = "ClimaCell"
+	serviceTomorrowIO   = "TomorrowIO"
 )
 
 func round(val float64) int64 {
