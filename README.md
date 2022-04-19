@@ -70,7 +70,7 @@ This produces a binary named “main”, but I recommend renaming it to “alfre
 
 Now for the real work. Go to your repo storage folder, run `git clone https://github.com/jason0x43/alfred-weather` to clone this repo, cd into `alfred-weather/workflow`, and run `alfred link`. This will make a symlink so that alfred can see your workflow. 
 
-The version should be 1.6.0-pre and look like this
+The version should be 1.6.0-pre and look like this in Alfred
 
 ![image](https://user-images.githubusercontent.com/30350506/164043476-64446bad-7a14-4069-a0b2-7ba7442ba1df.png)
 
