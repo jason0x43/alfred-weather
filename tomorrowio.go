@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
+
 var tmIconNames = map[int64]string{
 	  0: "clear",
       1000: "clear",
@@ -205,7 +207,7 @@ var tmDescriptions = map[int64]string{
 
 const tmAPI = "https://api.Tomorrow.io/v4/timelines"
 
-const tmUnits = "imperial"
+const tmUnits = "metric"
 
 // TomorrowIO is a weather service handle
 type TomorrowIO struct {
@@ -217,7 +219,7 @@ type tmWeather struct {
 		Timelines []struct {
 			EndTime   string `json:"endTime"`
 			Intervals []struct {
-				StartTime string `json:"startTime"`
+				StartTimeInterval string `json:"startTime"`
 				Values    struct {
 					Humidity                 float64   `json:"humidity"`
 					PrecipitationProbability int64   `json:"precipitationProbability"`
@@ -252,6 +254,18 @@ func (f *TomorrowIO) Forecast(l Location) (weather Weather, err error) {
 	if err != nil {
 		return
 	}
+
+      query := url.Values{}
+	query.Set("location",fmt.Sprintf("%f", l.Latitude)+ "," + fmt.Sprintf("%f", l.Longitude))
+	query.Set("fields", "precipitationProbability,temperature,temperatureApparent,weatherCode,humidity,sunriseTime,sunsetTime",)
+	query.Set("units", tmUnits)
+	query.Set("timesteps", "1d")
+	query.Set("timezone", "America/New_York")
+	query.Set("apikey", f.apiKey)
+
+	url := fmt.Sprintf("%s?%s", tmAPI, query.Encode())
+	
+	dlog.Printf("getting URL Daily %s", url)
 
 	weather.Current.Summary = tmDescriptions[hourly.Data.Timelines[0].Intervals[0].Values.WeatherCode]
 	weather.Current.Icon = tmIconNames[hourly.Data.Timelines[0].Intervals[0].Values.WeatherCode]
@@ -297,7 +311,7 @@ func (f *TomorrowIO) Forecast(l Location) (weather Weather, err error) {
 			
 		}
 		f := dailyForecast{
-			Date:     parseDate(d.StartTime),
+			Date:     parseDate(strings.Split(d.StartTimeInterval, "T")[0]),
 			Icon:     tmIconNames[d.Values.WeatherCode],
 			Summary:  tmDescriptions[d.Values.WeatherCode],
 			HighTemp: temperature(highTemp),
@@ -313,7 +327,7 @@ func (f *TomorrowIO) Forecast(l Location) (weather Weather, err error) {
 
 	for _, d := range hourly.Data.Timelines[0].Intervals {
 		f := hourlyForecast{
-			Time:         parseTime(d.StartTime),
+			Time:         parseTime(d.StartTimeInterval),
 			Icon:         tmIconNames[d.Values.WeatherCode],
 			Summary:      tmDescriptions[d.Values.WeatherCode],
 			Temp:         temperature(d.Values.Temperature),
@@ -334,7 +348,6 @@ func (f *TomorrowIO) DailyForecast(l Location) (data tmWeather, err error) {
 	query.Set("fields", "precipitationProbability,temperature,temperatureApparent,weatherCode,humidity,sunriseTime,sunsetTime",)
 	query.Set("units", tmUnits)
 	query.Set("timesteps", "1d")
-	query.Set("timezone", "America/New_York")
 	query.Set("apikey", f.apiKey)
 
 	url := fmt.Sprintf("%s?%s", tmAPI, query.Encode())
@@ -368,7 +381,6 @@ func (f *TomorrowIO) HourlyForecast(l Location) (data tmWeather, err error) {
 	query.Set("fields", "precipitationProbability,temperature,temperatureApparent,weatherCode,humidity",)
 	query.Set("units", tmUnits)
 	query.Set("timesteps", "1h")
-	query.Set("timezone", "America/New_York")
 	query.Set("apikey", f.apiKey)
 
 	url := fmt.Sprintf("%s?%s", tmAPI, query.Encode())
@@ -401,12 +413,16 @@ func (f *TomorrowIO) HourlyForecast(l Location) (data tmWeather, err error) {
 
 func parseTime(timeStr string) time.Time {
 	loc := time.Now().Location()
+      dlog.Printf("nonparsed Time: %s", timeStr)
 	date, _ := time.Parse(time.RFC3339, timeStr)
+      dlog.Printf("parsed Time: %s", date)
 	return date.In(loc)
 }
 
 func parseDate(dateStr string) time.Time {
+      dlog.Printf("nonparsed Date: %s", dateStr)
 	date, _ := time.Parse("2006-01-02", dateStr)
+      dlog.Printf("parsed Date: %s", date)
 	return date
 }
 
@@ -421,5 +437,5 @@ func findMinAndMax(a []float64) (min float64, max float64) {
 			max = value
 		}
 	}
-	return min, max
+	return max, min
 }
