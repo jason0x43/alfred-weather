@@ -1,566 +1,1136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.jason0x43.alfred-weather</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
 	<dict>
-		<key>bundleid</key>
-		<string>com.jason0x43.alfred-weather</string>
-		<key>connections</key>
-		<dict>
-			<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>D63DA191-0837-49A4-8F11-476BA59AE028</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-			<key>6F3135C7-F745-4BA1-A587-2B3E6D63D985</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<true></true>
-				</dict>
-			</array>
-			<key>A6114784-23AB-4AC4-84C3-2D137BFBC514</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-			<key>B7B15DD1-C49C-4216-A1B5-D12C04692853</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-			<key>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-			<key>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<true></true>
-				</dict>
-			</array>
-			<key>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<true></true>
-				</dict>
-			</array>
-			<key>D63DA191-0837-49A4-8F11-476BA59AE028</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>3AEF708A-258B-4276-9E5A-78C190C5A309</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-			<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<true></true>
-				</dict>
-			</array>
-			<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-				<dict>
-					<key>destinationuid</key>
-					<string>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-					<key>vitoclose</key>
-					<false></false>
-				</dict>
-			</array>
-		</dict>
-		<key>createdby</key>
-		<string>Jason Cheatham</string>
-		<key>description</key>
-		<string>Weather forecasts at your fingertips</string>
-		<key>disabled</key>
-		<false></false>
-		<key>name</key>
-		<string>Weather</string>
-		<key>objects</key>
+		<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
 		<array>
 			<dict>
-				<key>config</key>
-				<dict>
-					<key>lastpathcomponent</key>
-					<false></false>
-					<key>onlyshowifquerypopulated</key>
-					<true></true>
-					<key>removeextension</key>
-					<false></false>
-					<key>text</key>
-					<string>{query}</string>
-					<key>title</key>
-					<string>Weather</string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.output.notification</string>
-				<key>uid</key>
-				<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>alfredfiltersresults</key>
-					<false></false>
-					<key>argumenttype</key>
-					<integer>1</integer>
-					<key>escaping</key>
-					<integer>0</integer>
-					<key>keyword</key>
-					<string>wtr</string>
-					<key>queuedelaycustom</key>
-					<integer>3</integer>
-					<key>queuedelayimmediatelyinitially</key>
-					<true></true>
-					<key>queuedelaymode</key>
-					<integer>0</integer>
-					<key>queuemode</key>
-					<integer>1</integer>
-					<key>runningsubtext</key>
-					<string>Thinking...</string>
-					<key>script</key>
-					<string>./alfred-weather &#34;$1&#34; &#34;$data&#34;</string>
-					<key>scriptargtype</key>
-					<integer>1</integer>
-					<key>scriptfile</key>
-					<string></string>
-					<key>subtext</key>
-					<string>Weather!</string>
-					<key>title</key>
-					<string>wtr</string>
-					<key>type</key>
-					<integer>0</integer>
-					<key>withspace</key>
-					<true></true>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.input.scriptfilter</string>
-				<key>uid</key>
-				<string>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</string>
-				<key>version</key>
-				<integer>2</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>concurrently</key>
-					<false></false>
-					<key>escaping</key>
-					<integer>4</integer>
-					<key>script</key>
-					<string>./alfred-weather -final &#34;$1&#34;</string>
-					<key>scriptargtype</key>
-					<integer>1</integer>
-					<key>scriptfile</key>
-					<string></string>
-					<key>type</key>
-					<integer>0</integer>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.action.script</string>
-				<key>uid</key>
-				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
-				<key>version</key>
-				<integer>2</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>triggerid</key>
-					<string>start</string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.trigger.external</string>
-				<key>uid</key>
-				<string>A6114784-23AB-4AC4-84C3-2D137BFBC514</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>type</key>
-				<string>alfred.workflow.utility.hidealfred</string>
-				<key>uid</key>
-				<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>inputstring</key>
-					<string>{query}</string>
-					<key>matchcasesensitive</key>
-					<false></false>
-					<key>matchmode</key>
-					<integer>2</integer>
-					<key>matchstring</key>
-					<string>^(?!-trigger\b)</string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.utility.filter</string>
-				<key>uid</key>
-				<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>externaltriggerid</key>
-					<string>start</string>
-					<key>passinputasargument</key>
-					<true></true>
-					<key>passvariables</key>
-					<true></true>
-					<key>workflowbundleid</key>
-					<string>self</string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.output.callexternaltrigger</string>
-				<key>uid</key>
-				<string>3AEF708A-258B-4276-9E5A-78C190C5A309</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>alfredfiltersresults</key>
-					<false></false>
-					<key>argumenttype</key>
-					<integer>1</integer>
-					<key>escaping</key>
-					<integer>0</integer>
-					<key>keyword</key>
-					<string>wto</string>
-					<key>queuedelaycustom</key>
-					<integer>3</integer>
-					<key>queuedelayimmediatelyinitially</key>
-					<true></true>
-					<key>queuedelaymode</key>
-					<integer>0</integer>
-					<key>queuemode</key>
-					<integer>2</integer>
-					<key>runningsubtext</key>
-					<string>Thinking...</string>
-					<key>script</key>
-					<string>./alfred-weather &#34;$1&#34; &#34;{\&#34;keyword\&#34;:\&#34;options\&#34;}&#34;</string>
-					<key>scriptargtype</key>
-					<integer>1</integer>
-					<key>scriptfile</key>
-					<string></string>
-					<key>subtext</key>
-					<string>Workflow options</string>
-					<key>title</key>
-					<string>wto</string>
-					<key>type</key>
-					<integer>0</integer>
-					<key>withspace</key>
-					<true></true>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.input.scriptfilter</string>
-				<key>uid</key>
-				<string>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</string>
-				<key>version</key>
-				<integer>2</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>inputstring</key>
-					<string>{query}</string>
-					<key>matchcasesensitive</key>
-					<false></false>
-					<key>matchmode</key>
-					<integer>2</integer>
-					<key>matchstring</key>
-					<string>^-trigger\s</string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.utility.filter</string>
-				<key>uid</key>
-				<string>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>matchmode</key>
-					<integer>1</integer>
-					<key>matchstring</key>
-					<string>^-trigger\s</string>
-					<key>replacestring</key>
-					<string></string>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.utility.replace</string>
-				<key>uid</key>
+				<key>destinationuid</key>
 				<string>D63DA191-0837-49A4-8F11-476BA59AE028</string>
-				<key>version</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>alfredfiltersresults</key>
-					<false></false>
-					<key>argumenttype</key>
-					<integer>1</integer>
-					<key>escaping</key>
-					<integer>0</integer>
-					<key>keyword</key>
-					<string>wtd</string>
-					<key>queuedelaycustom</key>
-					<integer>3</integer>
-					<key>queuedelayimmediatelyinitially</key>
-					<false></false>
-					<key>queuedelaymode</key>
-					<integer>1</integer>
-					<key>queuemode</key>
-					<integer>2</integer>
-					<key>runningsubtext</key>
-					<string>Thinking...</string>
-					<key>script</key>
-					<string>./alfred-weather &#34;$1&#34; &#34;{\&#34;keyword\&#34;:\&#34;daily\&#34;}&#34;</string>
-					<key>scriptargtype</key>
-					<integer>1</integer>
-					<key>scriptfile</key>
-					<string></string>
-					<key>subtext</key>
-					<string>Get a forecast for the next few days</string>
-					<key>title</key>
-					<string>wtd</string>
-					<key>type</key>
-					<integer>0</integer>
-					<key>withspace</key>
-					<true></true>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.input.scriptfilter</string>
-				<key>uid</key>
-				<string>6F3135C7-F745-4BA1-A587-2B3E6D63D985</string>
-				<key>version</key>
-				<integer>2</integer>
-			</dict>
-			<dict>
-				<key>config</key>
-				<dict>
-					<key>alfredfiltersresults</key>
-					<false></false>
-					<key>argumenttype</key>
-					<integer>1</integer>
-					<key>escaping</key>
-					<integer>0</integer>
-					<key>keyword</key>
-					<string>wth</string>
-					<key>queuedelaycustom</key>
-					<integer>3</integer>
-					<key>queuedelayimmediatelyinitially</key>
-					<false></false>
-					<key>queuedelaymode</key>
-					<integer>1</integer>
-					<key>queuemode</key>
-					<integer>2</integer>
-					<key>runningsubtext</key>
-					<string>Thinking...</string>
-					<key>script</key>
-					<string>./alfred-weather &#34;$1&#34; &#34;{\&#34;keyword\&#34;:\&#34;hourly\&#34;}&#34;</string>
-					<key>scriptargtype</key>
-					<integer>1</integer>
-					<key>scriptfile</key>
-					<string></string>
-					<key>subtext</key>
-					<string>Get forecast for the next few hours</string>
-					<key>title</key>
-					<string>wth</string>
-					<key>type</key>
-					<integer>0</integer>
-					<key>withspace</key>
-					<true></true>
-				</dict>
-				<key>type</key>
-				<string>alfred.workflow.input.scriptfilter</string>
-				<key>uid</key>
-				<string>E33B90CE-05AB-4686-9BD3-3E89E7004930</string>
-				<key>version</key>
-				<integer>2</integer>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
-		<key>readme</key>
-		<string>This workflow allows you to get a quick weather forecast from Dark Sky or Weather Underground.</string>
-		<key>uidata</key>
-		<dict>
-			<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
+		<key>6F3135C7-F745-4BA1-A587-2B3E6D63D985</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>710</integer>
-				<key>ypos</key>
-				<integer>190</integer>
+				<key>destinationuid</key>
+				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
-			<key>3AEF708A-258B-4276-9E5A-78C190C5A309</key>
+		</array>
+		<key>A6114784-23AB-4AC4-84C3-2D137BFBC514</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>890</integer>
-				<key>ypos</key>
-				<integer>160</integer>
+				<key>destinationuid</key>
+				<string>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>477CCFC0-348D-4D12-AD03-EE46A6379F81</key>
+		</array>
+		<key>B7B15DD1-C49C-4216-A1B5-D12C04692853</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>890</integer>
-				<key>ypos</key>
-				<integer>40</integer>
+				<key>destinationuid</key>
+				<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>6F3135C7-F745-4BA1-A587-2B3E6D63D985</key>
+		</array>
+		<key>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>230</integer>
-				<key>ypos</key>
-				<integer>280</integer>
+				<key>destinationuid</key>
+				<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>A6114784-23AB-4AC4-84C3-2D137BFBC514</key>
+		</array>
+		<key>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>40</integer>
-				<key>ypos</key>
-				<integer>40</integer>
+				<key>destinationuid</key>
+				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
-			<key>B7B15DD1-C49C-4216-A1B5-D12C04692853</key>
+		</array>
+		<key>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>800</integer>
-				<key>ypos</key>
-				<integer>70</integer>
+				<key>destinationuid</key>
+				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
-			<key>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</key>
+		</array>
+		<key>D63DA191-0837-49A4-8F11-476BA59AE028</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>710</integer>
-				<key>ypos</key>
-				<integer>70</integer>
+				<key>destinationuid</key>
+				<string>3AEF708A-258B-4276-9E5A-78C190C5A309</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</key>
+		</array>
+		<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>230</integer>
-				<key>ypos</key>
-				<integer>160</integer>
+				<key>destinationuid</key>
+				<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
-			<key>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</key>
+		</array>
+		<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
+		<array>
 			<dict>
-				<key>xpos</key>
-				<integer>230</integer>
-				<key>ypos</key>
-				<integer>40</integer>
+				<key>destinationuid</key>
+				<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>D63DA191-0837-49A4-8F11-476BA59AE028</key>
 			<dict>
-				<key>xpos</key>
-				<integer>800</integer>
-				<key>ypos</key>
-				<integer>190</integer>
+				<key>destinationuid</key>
+				<string>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
-			<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
-			<dict>
-				<key>xpos</key>
-				<integer>230</integer>
-				<key>ypos</key>
-				<integer>400</integer>
-			</dict>
-			<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
-			<dict>
-				<key>xpos</key>
-				<integer>520</integer>
-				<key>ypos</key>
-				<integer>40</integer>
-			</dict>
-		</dict>
-		<key>version</key>
-		<string>1.6.0-pre</string>
-		<key>webaddress</key>
-		<string>https://github.com/jason0x43/alfred-weather</string>
+		</array>
 	</dict>
+	<key>createdby</key>
+	<string>Jason Cheatham</string>
+	<key>description</key>
+	<string>Weather forecasts at your fingertips</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Weather</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Weather</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>477CCFC0-348D-4D12-AD03-EE46A6379F81</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>wtr</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Thinking...</string>
+				<key>script</key>
+				<string>./alfred-weather "$1" "$data"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Weather!</string>
+				<key>title</key>
+				<string>wtr</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>start</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>A6114784-23AB-4AC4-84C3-2D137BFBC514</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^(?!-trigger\b)</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>B7B15DD1-C49C-4216-A1B5-D12C04692853</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>4</integer>
+				<key>script</key>
+				<string>./alfred-weather -final "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E3E023A5-3208-4089-923A-B09497B147D9</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>wto</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Thinking...</string>
+				<key>script</key>
+				<string>./alfred-weather "$1" "{\"keyword\":\"options\"}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Workflow options</string>
+				<key>title</key>
+				<string>wto</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>start</string>
+				<key>passinputasargument</key>
+				<true/>
+				<key>passvariables</key>
+				<true/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>3AEF708A-258B-4276-9E5A-78C190C5A309</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^-trigger\s</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^-trigger\s</string>
+				<key>regexcaseinsensitive</key>
+				<false/>
+				<key>regexmultiline</key>
+				<false/>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>D63DA191-0837-49A4-8F11-476BA59AE028</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>wtd</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Thinking...</string>
+				<key>script</key>
+				<string>./alfred-weather "$1" "{\"keyword\":\"daily\"}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Get a forecast for the next few days</string>
+				<key>title</key>
+				<string>wtd</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>6F3135C7-F745-4BA1-A587-2B3E6D63D985</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>wtd</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
+readonly workflow_url='sopat712/alfred-weather'
+readonly download_type='github_release'
+readonly frequency_check='1'
+
+# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
+function abort {
+  echo "${1}" &gt;&amp;2
+  exit 1
+}
+
+function url_exists {
+  curl --silent --location --output /dev/null --fail --range 0-0 "${1}"
+}
+
+function notification {
+  local -r notificator="$(find . -type f -name 'notificator')"
+
+  if [[ -f "${notificator}" &amp;&amp; "$(/usr/bin/file --brief --mime-type "${notificator}")" == 'text/x-shellscript' ]]; then
+    "${notificator}" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
+    return
+  fi
+
+  osascript -e "display notification \"${1}\" with title \"${alfred_workflow_name}\" subtitle \"A new version is available\""
+}
+
+# Local sanity checks
+readonly local_info_plist='info.plist'
+readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
+
+[[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
+[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
+[[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
+
+# Check for updates
+if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
+  # Remote sanity check
+  if ! url_exists "${remote_info_plist}"; then
+    abort "'remote_info_plist' (${remote_info_plist}) appears to not be reachable."
+  fi
+
+  readonly tmp_file="$(mktemp)"
+  curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
+  readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
+  rm "${tmp_file}"
+
+  if [[ "${local_version}" == "${remote_version}" ]]; then
+    touch "${local_info_plist}" # Reset timer by touching local file
+    exit 0
+  fi
+
+  if [[ "${download_type}" == 'page' ]]; then
+    notification 'Opening download page…'
+    open "${workflow_url}"
+    exit 0
+  fi
+
+  readonly download_url="$(
+    if [[ "${download_type}" == 'github_release' ]]; then
+      osascript -l JavaScript -e 'function run(argv) { return JSON.parse(argv[0])["assets"].find(asset =&gt; asset["browser_download_url"].endsWith(".alfredworkflow"))["browser_download_url"] }' "$(curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest")"
+    else
+      echo "${workflow_url}"
+    fi
+  )"
+
+  if url_exists "${download_url}"; then
+    notification 'Downloading and installing…'
+    readonly download_name="$(basename "${download_url}")"
+    curl --silent --location --output "${HOME}/Downloads/${download_name}" "${download_url}"
+    open "${HOME}/Downloads/${download_name}"
+  else
+    abort "'workflow_url' (${download_url}) appears to not be reachable."
+  fi
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0F7F546E-A1BD-4925-860C-11BB9D59404A</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>wth</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
+readonly workflow_url='sopat712/alfred-weather'
+readonly download_type='github_release'
+readonly frequency_check='1'
+
+# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
+function abort {
+  echo "${1}" &gt;&amp;2
+  exit 1
+}
+
+function url_exists {
+  curl --silent --location --output /dev/null --fail --range 0-0 "${1}"
+}
+
+function notification {
+  local -r notificator="$(find . -type f -name 'notificator')"
+
+  if [[ -f "${notificator}" &amp;&amp; "$(/usr/bin/file --brief --mime-type "${notificator}")" == 'text/x-shellscript' ]]; then
+    "${notificator}" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
+    return
+  fi
+
+  osascript -e "display notification \"${1}\" with title \"${alfred_workflow_name}\" subtitle \"A new version is available\""
+}
+
+# Local sanity checks
+readonly local_info_plist='info.plist'
+readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
+
+[[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
+[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
+[[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
+
+# Check for updates
+if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
+  # Remote sanity check
+  if ! url_exists "${remote_info_plist}"; then
+    abort "'remote_info_plist' (${remote_info_plist}) appears to not be reachable."
+  fi
+
+  readonly tmp_file="$(mktemp)"
+  curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
+  readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
+  rm "${tmp_file}"
+
+  if [[ "${local_version}" == "${remote_version}" ]]; then
+    touch "${local_info_plist}" # Reset timer by touching local file
+    exit 0
+  fi
+
+  if [[ "${download_type}" == 'page' ]]; then
+    notification 'Opening download page…'
+    open "${workflow_url}"
+    exit 0
+  fi
+
+  readonly download_url="$(
+    if [[ "${download_type}" == 'github_release' ]]; then
+      osascript -l JavaScript -e 'function run(argv) { return JSON.parse(argv[0])["assets"].find(asset =&gt; asset["browser_download_url"].endsWith(".alfredworkflow"))["browser_download_url"] }' "$(curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest")"
+    else
+      echo "${workflow_url}"
+    fi
+  )"
+
+  if url_exists "${download_url}"; then
+    notification 'Downloading and installing…'
+    readonly download_name="$(basename "${download_url}")"
+    curl --silent --location --output "${HOME}/Downloads/${download_name}" "${download_url}"
+    open "${HOME}/Downloads/${download_name}"
+  else
+    abort "'workflow_url' (${download_url}) appears to not be reachable."
+  fi
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>6FFC434B-E9A8-4ADE-AFD5-139ECF1ECD47</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>wth</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Thinking...</string>
+				<key>script</key>
+				<string>./alfred-weather "$1" "{\"keyword\":\"hourly\"}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Get forecast for the next few hours</string>
+				<key>title</key>
+				<string>wth</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E33B90CE-05AB-4686-9BD3-3E89E7004930</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>wtr</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
+readonly workflow_url='sopat712/alfred-weather'
+readonly download_type='github_release'
+readonly frequency_check='1'
+
+# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
+function abort {
+  echo "${1}" &gt;&amp;2
+  exit 1
+}
+
+function url_exists {
+  curl --silent --location --output /dev/null --fail --range 0-0 "${1}"
+}
+
+function notification {
+  local -r notificator="$(find . -type f -name 'notificator')"
+
+  if [[ -f "${notificator}" &amp;&amp; "$(/usr/bin/file --brief --mime-type "${notificator}")" == 'text/x-shellscript' ]]; then
+    "${notificator}" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
+    return
+  fi
+
+  osascript -e "display notification \"${1}\" with title \"${alfred_workflow_name}\" subtitle \"A new version is available\""
+}
+
+# Local sanity checks
+readonly local_info_plist='info.plist'
+readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
+
+[[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
+[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
+[[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
+
+# Check for updates
+if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
+  # Remote sanity check
+  if ! url_exists "${remote_info_plist}"; then
+    abort "'remote_info_plist' (${remote_info_plist}) appears to not be reachable."
+  fi
+
+  readonly tmp_file="$(mktemp)"
+  curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
+  readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
+  rm "${tmp_file}"
+
+  if [[ "${local_version}" == "${remote_version}" ]]; then
+    touch "${local_info_plist}" # Reset timer by touching local file
+    exit 0
+  fi
+
+  if [[ "${download_type}" == 'page' ]]; then
+    notification 'Opening download page…'
+    open "${workflow_url}"
+    exit 0
+  fi
+
+  readonly download_url="$(
+    if [[ "${download_type}" == 'github_release' ]]; then
+      osascript -l JavaScript -e 'function run(argv) { return JSON.parse(argv[0])["assets"].find(asset =&gt; asset["browser_download_url"].endsWith(".alfredworkflow"))["browser_download_url"] }' "$(curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest")"
+    else
+      echo "${workflow_url}"
+    fi
+  )"
+
+  if url_exists "${download_url}"; then
+    notification 'Downloading and installing…'
+    readonly download_name="$(basename "${download_url}")"
+    curl --silent --location --output "${HOME}/Downloads/${download_name}" "${download_url}"
+    open "${HOME}/Downloads/${download_name}"
+  else
+    abort "'workflow_url' (${download_url}) appears to not be reachable."
+  fi
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>14181291-B716-4E3D-9913-C1D695D1077E</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>wto</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
+readonly remote_info_plist='https://raw.githubusercontent.com/SoPat712/alfred-weather/master/workflow/info.plist'
+readonly workflow_url='sopat712/alfred-weather'
+readonly download_type='github_release'
+readonly frequency_check='1'
+
+# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
+function abort {
+  echo "${1}" &gt;&amp;2
+  exit 1
+}
+
+function url_exists {
+  curl --silent --location --output /dev/null --fail --range 0-0 "${1}"
+}
+
+function notification {
+  local -r notificator="$(find . -type f -name 'notificator')"
+
+  if [[ -f "${notificator}" &amp;&amp; "$(/usr/bin/file --brief --mime-type "${notificator}")" == 'text/x-shellscript' ]]; then
+    "${notificator}" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
+    return
+  fi
+
+  osascript -e "display notification \"${1}\" with title \"${alfred_workflow_name}\" subtitle \"A new version is available\""
+}
+
+# Local sanity checks
+readonly local_info_plist='info.plist'
+readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
+
+[[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
+[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
+[[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
+
+# Check for updates
+if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
+  # Remote sanity check
+  if ! url_exists "${remote_info_plist}"; then
+    abort "'remote_info_plist' (${remote_info_plist}) appears to not be reachable."
+  fi
+
+  readonly tmp_file="$(mktemp)"
+  curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
+  readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
+  rm "${tmp_file}"
+
+  if [[ "${local_version}" == "${remote_version}" ]]; then
+    touch "${local_info_plist}" # Reset timer by touching local file
+    exit 0
+  fi
+
+  if [[ "${download_type}" == 'page' ]]; then
+    notification 'Opening download page…'
+    open "${workflow_url}"
+    exit 0
+  fi
+
+  readonly download_url="$(
+    if [[ "${download_type}" == 'github_release' ]]; then
+      osascript -l JavaScript -e 'function run(argv) { return JSON.parse(argv[0])["assets"].find(asset =&gt; asset["browser_download_url"].endsWith(".alfredworkflow"))["browser_download_url"] }' "$(curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest")"
+    else
+      echo "${workflow_url}"
+    fi
+  )"
+
+  if url_exists "${download_url}"; then
+    notification 'Downloading and installing…'
+    readonly download_name="$(basename "${download_url}")"
+    curl --silent --location --output "${HOME}/Downloads/${download_name}" "${download_url}"
+    open "${HOME}/Downloads/${download_name}"
+  else
+    abort "'workflow_url' (${download_url}) appears to not be reachable."
+  fi
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>598C3EFF-2E45-4AB2-AFCA-34A1160EC749</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>This workflow allows you to get a quick weather forecast from Dark Sky or Weather Underground.
+
+This is a fork of https://github.com/jason0x43/alfred-weather, with some extra features.</string>
+	<key>uidata</key>
+	<dict>
+		<key>0F7F546E-A1BD-4925-860C-11BB9D59404A</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>12</integer>
+			<key>note</key>
+			<string>OneUpdater</string>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>315</integer>
+		</dict>
+		<key>14181291-B716-4E3D-9913-C1D695D1077E</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>12</integer>
+			<key>note</key>
+			<string>OneUpdater</string>
+			<key>xpos</key>
+			<integer>580</integer>
+			<key>ypos</key>
+			<integer>450</integer>
+		</dict>
+		<key>2D2CAE4A-DA46-43E8-970D-B8BCA6A02378</key>
+		<dict>
+			<key>xpos</key>
+			<integer>705</integer>
+			<key>ypos</key>
+			<integer>245</integer>
+		</dict>
+		<key>3AEF708A-258B-4276-9E5A-78C190C5A309</key>
+		<dict>
+			<key>xpos</key>
+			<integer>890</integer>
+			<key>ypos</key>
+			<integer>215</integer>
+		</dict>
+		<key>477CCFC0-348D-4D12-AD03-EE46A6379F81</key>
+		<dict>
+			<key>xpos</key>
+			<integer>890</integer>
+			<key>ypos</key>
+			<integer>40</integer>
+		</dict>
+		<key>598C3EFF-2E45-4AB2-AFCA-34A1160EC749</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>12</integer>
+			<key>note</key>
+			<string>OneUpdater</string>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>450</integer>
+		</dict>
+		<key>6F3135C7-F745-4BA1-A587-2B3E6D63D985</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>280</integer>
+		</dict>
+		<key>6FFC434B-E9A8-4ADE-AFD5-139ECF1ECD47</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>12</integer>
+			<key>note</key>
+			<string>OneUpdater</string>
+			<key>xpos</key>
+			<integer>580</integer>
+			<key>ypos</key>
+			<integer>315</integer>
+		</dict>
+		<key>A6114784-23AB-4AC4-84C3-2D137BFBC514</key>
+		<dict>
+			<key>xpos</key>
+			<integer>40</integer>
+			<key>ypos</key>
+			<integer>40</integer>
+		</dict>
+		<key>B7B15DD1-C49C-4216-A1B5-D12C04692853</key>
+		<dict>
+			<key>xpos</key>
+			<integer>800</integer>
+			<key>ypos</key>
+			<integer>70</integer>
+		</dict>
+		<key>C0BFA959-41B1-4DD9-96C4-38E4BE1CF67A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>710</integer>
+			<key>ypos</key>
+			<integer>70</integer>
+		</dict>
+		<key>C3603D8F-CBB2-4A62-AB29-CE0E460F88B3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>160</integer>
+		</dict>
+		<key>D04E666C-E3F4-4059-8DFE-8B4B566D72D8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>40</integer>
+		</dict>
+		<key>D63DA191-0837-49A4-8F11-476BA59AE028</key>
+		<dict>
+			<key>xpos</key>
+			<integer>805</integer>
+			<key>ypos</key>
+			<integer>245</integer>
+		</dict>
+		<key>E33B90CE-05AB-4686-9BD3-3E89E7004930</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>400</integer>
+		</dict>
+		<key>E3E023A5-3208-4089-923A-B09497B147D9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>505</integer>
+			<key>ypos</key>
+			<integer>90</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.7.2</string>
+	<key>webaddress</key>
+	<string>https://github.com/jason0x43/alfred-weather</string>
+</dict>
 </plist>

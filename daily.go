@@ -86,8 +86,8 @@ func (c DailyCommand) Items(arg, data string) (items []alfred.Item, err error) {
 		}
 
 		parts := []string{
-			fmt.Sprintf("↓ %d°%s", entry.LowTemp.Int64(), deg),
 			fmt.Sprintf("↑ %d°%s", entry.HighTemp.Int64(), deg),
+			fmt.Sprintf("↓ %d°%s", entry.LowTemp.Int64(), deg),
 		}
 
 		dlog.Printf("precip: %d\n", entry.Precip)

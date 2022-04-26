@@ -116,8 +116,8 @@ func getWeather(query string) (loc Location, weather Weather, err error) {
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}
-		case serviceClimaCell:
-			service := NewClimaCell(config.ClimaCellKey)
+		case serviceTomorrowIO:
+			service := NewTomorrowIO(config.TomorrowIOKey)
 			if weather, err = service.Forecast(loc); err != nil {
 				return
 			}
@@ -149,8 +149,8 @@ func validateConfig() error {
 		hasKey = config.DarkSkyKey != ""
 	case serviceOpenWeather:
 		hasKey = config.OpenWeatherKey != ""
-	case serviceClimaCell:
-		hasKey = config.ClimaCellKey != ""
+	case serviceTomorrowIO:
+		hasKey = config.TomorrowIOKey != ""
 	}
 
 	if !hasKey {

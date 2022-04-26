@@ -49,6 +49,7 @@ type owWeather struct {
 	} `json:"current"`
 	Daily []struct {
 		Time         int64   `json:"dt"`
+		PreciptProb  float64 `json:"pop"`
 		Humidity     float64 `json:"humidity"`
 		ApparentTemp struct {
 			Day     float64 `json:"day"`
@@ -69,6 +70,7 @@ type owWeather struct {
 	} `json:"daily"`
 	Hourly []struct {
 		Time         int64   `json:"dt"`
+		PreciptProb  float64 `json:"pop"`
 		ApparentTemp float64 `json:"feels_like"`
 		Humidity     float64 `json:"humidity"`
 		Temp         float64 `json:"temp"`
@@ -140,7 +142,7 @@ func (f *OpenWeather) Forecast(l Location) (weather Weather, err error) {
 			Sunset:   time.Unix(d.SunsetTime, 0),
 
 			// OpenWeather doesn't support precip chance
-			Precip: -1,
+			Precip: int(d.PreciptProb * 100),
 		}
 		weather.Daily = append(weather.Daily, f)
 	}
@@ -152,6 +154,7 @@ func (f *OpenWeather) Forecast(l Location) (weather Weather, err error) {
 			Summary:      d.Weather[0].Description,
 			Temp:         temperature(d.Temp),
 			ApparentTemp: temperature(d.ApparentTemp),
+			Precip: 	 int(d.PreciptProb * 100),
 		}
 		weather.Hourly = append(weather.Hourly, f)
 	}
