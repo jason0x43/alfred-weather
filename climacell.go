@@ -60,7 +60,7 @@ var ccDescriptions = map[string]string{
 	"freezing_rain_heavy": "Heavy freezing rain",
 }
 
-const ccAPI = "https://api.climacell.co/v3/weather"
+const ccAPI = "https://api.tomorrow.io/v4/timelines"
 
 const ccUnits = "si"
 
